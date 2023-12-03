@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Portal</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<body>  
+
+  <div class="topnav">
+    <div class="left-link" id="Inicio">
+      {% if user.is_authenticated %}
+        {% if user.rol == 'Admin' %}
+          <a href="{% url 'portal_admin' %}">Inicio</a>
+        {% elif user.rol == 'Intendente' %}
+          <a href="{% url 'portal_intendencia' %}">Inicio</a>
+       {% endif %}
+      {% else %}
+        <!-- Enlace para usuarios no autenticados, si es necesario -->
+        <a href="{% url 'inicio_sesion' %}">Iniciar Sesión</a>
+      {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+      <div class="right-link"  id="cerrarSesion" >
+        <a href="#alerta">Cerrar Sesión</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="alerta" id="alerta">
+    <p>¿Realmente desea cerrar la sesión?</p>
+    <div id="siRecuadro">
+      <a href="{% url 'cerrar_sesion' %}">Sí</a>
+    </div>
+    <div id="noRecuadro">
+      <a href="#">No</a>
+    </div>
+  </div>
+  
+  {% block content %} {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Inventario de Materiales
+{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'lista_materiales.css' %}">
+
+  <h2 class="text-center mb-4">Inventario de Materiales</h2>
+  <form method="post" action="{% url 'agregar_al_carrito_bulk' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Artículo</th>
+            <th scope="col">Cantidad Disponible</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Acciones</th>
+            <th scope="col">Cantidad a agregar a carrito:</th>
+            {% if user.is_authenticated and user.rol == 'Admin' %}
+              <th scope="col">Administrar</th>
+              <th scope="col">Alarm</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% if materiales %}
+            {% for material in materiales %}
+              <tr>
+                <td>{{ material.nombre_articulo }}</td>
+                <td>{{ material.cantidad }}</td>
+                <td>{{ material.categoria }}</td>
+                <td>
+                  <a href="{% url 'ver_producto' pk=material.pk %}" class="btn btn-primary btn-sm">
+                    Ver Detalles
+                  </a>
+                </td>
+                <td>
+                  {% if material.cantidad > 0 %}
+                    <div class="form-group">
+                      <label for="cantidad{{ material.pk }}"></label>
+                      <input type="number" name="cantidades[]" id="cantidad{{ material.pk }}" class="form-control" min="0" value="0">
+                      <input type="hidden" name="materiales[]" value="{{ material.pk }}">
+                    </div>
+                  {% else %}
+                    <p>Material agotado</p>
+                  {% endif %}
+                </td>
+                {% if user.is_authenticated and user.rol == 'Admin' %}
+                  <td>
+                    <a href="{% url 'editar_material' pk=material.pk %}">Editar Producto</a>
+                    <a href="{% url 'agregar_material' pk=material.pk %}">Restablecer Producto</a>
+                    <a href="{% url 'eliminar_material' pk=material.pk %}">Eliminar Producto</a>
+                  </td>
+                  <td>
+                    {% if material.cantidad <= material.umbral %}
+                      <p>¡Riesgo de desavasto!</p>
+                    {% endif %}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="{% if user.is_authenticated and user.rol == 'Admin' %}7{% else %}6{% endif %}" class="text-center">No hay materiales agregados aún.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if request.GET.taken == "true" %}
+      <div class="alert alert-success" role="alert">
+        ¡Producto tomado exitosamente!
+      </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      {% if user.is_authenticated and user.rol == 'Admin' %}
+        <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
+      {% else %}
+        <a href="{% url 'portal_intendencia' %}" class="btn btn-info">Volver al portal</a>
+      {% endif %}
+      <a href="{% url 'ver_carrito' %}" class="btn btn-info">Ver Carrito</a>
+      {% if user.is_authenticated and user.rol == 'Admin' %}
+        <a href="{% url 'añadir_material' %}" class="btn btn-success">Agregar Material</a>
+      {% endif %}
+      <button type="submit" class="btn btn-success">Agregar Todos al Carrito</button>
+    </div>
+    </form>
+  </body>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    });
+  </script>
+
+{% endblock %}

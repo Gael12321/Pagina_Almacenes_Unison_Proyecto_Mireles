@@ -1,0 +1,129 @@
+/* lista_materiales.css */
+
+/* Style for the table container */
+.table-container {
+  margin-top: 20px;
+}
+
+/* Style for the table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+}
+
+/* Style for table headers */
+thead th {
+  background-color: #343a40; /* Dark gray background color */
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+/* Style for table rows */
+tbody tr:hover {
+  background-color: #f8f9fa; /* Light gray background color on hover */
+}
+
+/* Style for alternating row colors */
+tbody tr:nth-child(even) {
+  background-color: #f3f4f6; /* Lighter gray for even rows */
+}
+
+/* Style for table cells */
+td, th {
+  padding: 10px;
+  border: 1px solid #dee2e6; /* Light gray border for cells */
+}
+
+/* Style for buttons */
+.btn {
+  margin-right: 5px;
+}
+
+/* Style for the alert message */
+.alert {
+  margin-top: 10px;
+}
+
+/* Style for the form group */
+.form-group {
+  margin-bottom: 0; /* Remove default margin-bottom for better alignment */
+}
+
+/* Style for the quantity input */
+.form-control {
+  width: 70px;
+}
+
+/* Style for the page heading */
+h2 {
+  color: #007bff; /* Blue color for the heading */
+}
+
+/* Style for the "No materials added yet" message */
+.text-center {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #6c757d; /* Gray color for the message */
+}
+
+/* Style for the action buttons */
+.btn-primary,
+.btn-info,
+.btn-success,
+.btn-danger {
+  padding: 8px 16px;
+  margin-right: 8px;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border: 1px solid #17a2b8;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+/* Style for the form button */
+.btn-submit {
+  padding: 10px 20px;
+  background-color: #28a745;
+  border: 1px solid #28a745;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.btn-submit:hover {
+  background-color: #218838;
+}
+
+.btn-link {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+.btn-link:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}

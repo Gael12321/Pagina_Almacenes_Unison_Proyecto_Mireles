@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% load static %}
+
+{%block content%}
+<form method="post">{% csrf_token %}
+    <p>¿Estás seguro de la eliminación de: "{{ object }}"?</p>
+
+    <input type="submit" value="Confirmar">
+</form>
+{%endblock%}

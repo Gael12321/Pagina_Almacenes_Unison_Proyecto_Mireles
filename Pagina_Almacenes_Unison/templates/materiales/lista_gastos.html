@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+{% load static %}
+
+{%block content%}
+    <h2>Lista de gastos</h2>
+    {% if gastos %}
+        {% for gasto in gastos %}
+            <hr>
+            <p><b>Producto:</b> {{ gasto.producto }}</p>
+            <p><b>Precio unitario:</b> {{ gasto.producto.precio_unitario }}</p>
+            <p><b>Cantidad:</b> {{gasto.cantidad }} </p>
+            <p><b>Gasto</b>: ${{gasto.gasto}}</p>
+            <p><b>Fecha del gasto:</b> {{gasto.fecha}}</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No se han hecho gastos aún.</p>
+    {% endif %}
+{%endblock%}

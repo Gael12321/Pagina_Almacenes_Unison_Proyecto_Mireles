@@ -1,0 +1,68 @@
+<!-- ver_carrito.html -->
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Ver Carrito
+{% endblock %}
+
+{% block content %}
+  <h2 class="text-center mb-4">Tu Carrito</h2>
+
+  {% if total_items > 0 %}
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Artículo</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in carrito_items %}
+          <tr>
+            <td>{{ item.material.nombre_articulo }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>
+              <a href="{% url 'eliminar_del_carrito' pk=item.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-center">
+      <div class="text-center">
+        {% for item in carrito_items %}
+          {% if item.cantidad > item.material.cantidad %}
+            <p class="text-danger">¡Alerta! La cantidad en el carrito para "{{ item.material.nombre_articulo }}" es mayor que la cantidad total de materiales disponibles.</p>
+            <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
+            <a href="{% url 'borrar_carrito' %}" class="btn btn-warning">Borrar Todo el Carrito</a>
+          {% else %}
+            {% if forloop.last %}
+              <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
+              <a href="{% url 'borrar_carrito' %}" class="btn btn-warning">Borrar Todo el Carrito</a>
+              <a href="{% url 'confirmar_pedido' %}" class="btn btn-success">Confirmar Pedido</a>
+            {% endif %}
+          {% endif %}        
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <p>No hay elementos en tu carrito.</p>
+    <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
+  {% endif %}
+
+  {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+      {{ error_message }}
+    </div>
+  {% endif %}
+
+  {% if success_message %}
+    <div class="alert alert-success" role="alert">
+      {{ success_message }}
+    </div>
+  {% endif %}
+  
+{% endblock %}

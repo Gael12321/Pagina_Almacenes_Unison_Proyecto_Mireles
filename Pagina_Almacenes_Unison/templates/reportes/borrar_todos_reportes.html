@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+    <h2>Borrar Todos los Reportes</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>¿Estás seguro de la eliminación de todos los reportes?</p>
+        <input type="submit" value="Confirmar">
+    </form>
+
+    <br>
+    <a href="{% url 'lista_reportes' %}">Volver a la lista de reportes</a>
+{% endblock %}

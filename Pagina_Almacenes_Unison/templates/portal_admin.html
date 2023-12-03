@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+
+<body id="content" class="portal-content">
+  <h1>Portal Admin</h1>
+
+  <div id="Botones-Portal" class="portal-content">
+    <a href="{% url 'lista_materiales' %}">
+      <img src="{% static 'img/materiales.png' %}" alt="Materiales">
+    </a>
+    <a href="{% url 'lista_reportes' %}">
+      <img src="{% static 'img/reportes.png' %}" alt="Reportes">
+    </a>
+    <a href="{% url 'lista_gastos' %}">
+      <img src="{% static 'img/gastos.png' %}" alt="Gastos">
+    </a>
+    <a href="{% url 'crear_usuario' %}">
+      <img src="{% static 'img/Usuario.png' %}" alt="Usuario">
+    </a>
+  </div>
+
+  {% if generar_alerta %}
+  <script>
+    alert("La cantidad de {{ material.nombre_articulo }} está por debajo del umbral mínimo");
+  </script>
+{% endif %}
+</body>
+<link rel="stylesheet" href="{% static 'Portal.css' %}">
+{% endblock %}

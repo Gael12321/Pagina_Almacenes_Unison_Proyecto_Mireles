@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Agregar
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <div >
+        <h2>Agregar al produto</h2>
+        <p><b>Artículo:</b> {{ material.nombre_articulo }}</p>
+        <p><b>Cantidad actual:</b> {{ material.cantidad }}</p>
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button type="submit" class="button-signup" id="btn-submit">
+            Agregar 
+        </button>
+        <a type="button" href="{% url 'lista_materiales' %}">
+            Cancelar
+        </a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Hacer reporte
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <div >
+        <h2>Hacer reporte</h2>
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button type="submit" class="button-signup" id="btn-submit">
+            Crear
+        </button>
+        <button type="button" href="{% url 'lista_reportes' %}">
+            Cancelar
+        </button>
+    </div>
+</form>
+{% endblock %}

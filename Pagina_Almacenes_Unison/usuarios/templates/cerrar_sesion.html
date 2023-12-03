@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerrar Sesión</title>
+</head>
+<body>
+    <h2>Cerrar Sesión</h2>
+    <p>¿Estás seguro de que deseas cerrar sesión?</p>
+    
+    <form method="post" action="{% url 'cerrar_sesion' %}">
+        {% csrf_token %}
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+</body>
+</html>

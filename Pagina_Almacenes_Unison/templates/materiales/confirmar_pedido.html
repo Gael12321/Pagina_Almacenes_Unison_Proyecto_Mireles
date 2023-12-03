@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Confirmar Pedido
+{% endblock %}
+
+{% block content %}
+  <h2 class="text-center mb-4">Confirmar Pedido</h2>
+
+  <div>
+    <p>Resumen del Pedido:</p>
+
+    <ul>
+      {% for item in carrito %}
+        <li>{{ item.material.nombre_articulo }} - Cantidad: {{ item.cantidad }} - Subtotal: {{ item.subtotal }}</li>
+      {% endfor %}
+    </ul>
+
+    <p>Total: {{ total }}</p>
+  </div>
+
+  <form method="post" action="{% url 'procesar_pedido' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Confirmar Pedido</button>
+  </form>
+
+{% endblock %}

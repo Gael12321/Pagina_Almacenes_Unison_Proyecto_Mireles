@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Crear usuario
+{% endblock %}
+
+{% block content %}
+<form method="post" action=".">
+    <div>
+        <h2>Crear usuario</h2>
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button type="submit" class="button-signup" id="btn-submit">
+            Crear
+        </button>
+        <a href="{% url 'portal_admin' %}" class="btn btn-default">Cancelar</a>
+    </div>
+</form>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'crear_usuario.css' %}">
+<link rel="stylesheet" href="{% static 'Fondo.css' %}">
+
+{% endblock %}

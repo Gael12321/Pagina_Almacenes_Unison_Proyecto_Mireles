@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}
+    Detalles del Producto
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2 class="text-center">Detalles del Producto</h2>
+
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center">
+              <p><strong>Artículo:</strong> {{ material.nombre_articulo }}</p>
+              <p><strong>Cantidad disponible:</strong> {{ material.cantidad }}</p>
+              <p><strong>Descripcion del Producto:</strong> {{ material.descripcion }}</p>
+              <p><strong>Origen del Producto:</strong> {{ material.get_Origen_display }}</p>
+              <img src="{{ material.imagen.url }}" alt="{{ material.nombre }}" class="img-thumbnail" width="100">
+            </div>
+            
+            <div class="text-center mt-4">
+              <a href="{% url 'lista_materiales' %}" class="btn btn-secondary">
+                Volver a la Lista
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
