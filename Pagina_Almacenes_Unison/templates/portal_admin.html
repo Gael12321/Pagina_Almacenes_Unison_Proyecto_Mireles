@@ -19,16 +19,19 @@
     <a href="{% url 'lista_gastos' %}" class="gastos">
       <img src="{% static 'img/gastos.png' %}" alt="Gastos">
     </a>
-    <a href="{% url 'crear_usuario' %}" class="Usuarios">
+    <a href="{% url 'lista_usuario' %}" class="Usuarios">
       <img src="{% static 'img/Usuario.png' %}" alt="Usuario">
     </a>
   </div>
 
-  {% if generar_alerta %}
-  <script>
-    alert("La cantidad de {{ material.nombre_articulo }} está por debajo del umbral mínimo");
-  </script>
-  {% endif %}
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
 </body>
 
 {% endblock %}

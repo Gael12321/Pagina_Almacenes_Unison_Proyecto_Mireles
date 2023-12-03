@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block content %}
+  <h2>Lista de Usuarios</h2>
+  
+  <ul>
+    {% for usuario in usuarios %}
+      <li>
+        <a href="{% url 'ver_usuarios' pk=usuario.pk %}">{{ usuario.username }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  
+  <a href="{% url 'crear_usuario' %}">Crear Nuevo Usuario</a>
+{% endblock %}

@@ -39,13 +39,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('portal/admin/', user_passes_test(es_admin, login_url='/portal/')(Portal_admin.as_view()), name='portal_admin'),
     path('portal/', user_passes_test(es_intendencia, login_url='/portal/')(Portal_intendencia.as_view()), name='portal_intendencia'),
-    path('', RedirectView.as_view(url='portal/')),
+    path('', RedirectView.as_view(url='iniciar-sesion/')),
 ]
 
 urlpatterns += [
     path('iniciar-sesion/', InicioSesionView.as_view(), name='inicio_sesion'),
+    path('cerrar-sesion/', CerrarSesionView.as_view(), name='cerrar_sesion'),
+    path('lista-usuarios/', ListaUsuario.as_view(), name='lista_usuario'),
     path('crear-usuario/', CrearUsuario.as_view(), name='crear_usuario'),
-    path('cerrar-sesion/', CerrarSesionView.as_view(), name='cerrar_sesion'),   
+    path('ver-usuario/<str:pk>/', VerUsuario.as_view(), name='ver_usuarios'),
+    path('editar-usuario/<str:pk>/', EditarUsuario.as_view(), name='editar_usuario'),
+    path('eliminar-usuario/<str:pk>/', EliminarUsuario.as_view(), name='eliminar_usuario'),
+
 ]
 
 urlpatterns += [
