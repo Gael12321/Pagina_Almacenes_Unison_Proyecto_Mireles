@@ -208,9 +208,17 @@ def agregar_al_carrito_bulk(request):
 
         for cantidad, material_id in zip(cantidades, materiales_ids):
             cantidad = int(cantidad)
-            material = Material.objects.get(pk=material_id)
+            material = get_object_or_404(Material, pk=material_id)
 
-            if cantidad > 0:
+            # Verifica si el elemento ya está en el carrito para el usuario actual
+            entrada_carrito_existente = Carrito.objects.filter(usuario=request.user, material=material).first()
+
+            if entrada_carrito_existente:
+                # Si el elemento ya está en el carrito, actualiza la cantidad
+                entrada_carrito_existente.cantidad += cantidad
+                entrada_carrito_existente.save()
+            elif cantidad > 0:
+                # Si el elemento no está en el carrito, crea una nueva entrada
                 Carrito.objects.create(usuario=request.user, material=material, cantidad=cantidad)
 
     return redirect('lista_materiales')

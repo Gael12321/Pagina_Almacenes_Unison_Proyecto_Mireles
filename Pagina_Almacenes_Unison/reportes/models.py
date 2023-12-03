@@ -1,6 +1,6 @@
 from django.db import models
 from usuarios.models import Usuario
-from materiales.models import Material
+from materiales.models import Material, Gasto
 
 # Create your models here.
 
@@ -19,14 +19,24 @@ class Reporte(models.Model):
     estado = models.CharField('Estado de solicitud', max_length=10, choices=EstadoSolicitud.choices, default='Pendiente')
 
     detalles = models.ManyToManyField(Material, through='DetalleReporte')
-
+    
+    def total_gastado(self):
+        detalles = self.detallereporte_set.all()
+        return sum(detalle.total_gastado() for detalle in detalles)
+    
     def __str__(self):
-        return f"Reporte de solicitud por {self.solicitante.nombres} {self.solicitante.apellidos} el {self.fecha}"
+        return f"Reporte de solicitud por {self.solicitante.nombres} {self.solicitante.apellidos}"
 
 class DetalleReporte(models.Model):
     reporte = models.ForeignKey(Reporte, on_delete=models.CASCADE, verbose_name="Reporte")
     producto = models.ForeignKey(Material, on_delete=models.CASCADE, verbose_name="Material")
     cantidad = models.IntegerField("Cantidad")
+
+    def total_gastado(self):
+        return self.cantidad * self.producto.precio_unitario
+    
+    
+
 
     def __str__(self):
         return f"{self.cantidad} artículos pedidos de: {self.producto.nombre_articulo} en el reporte {self.reporte}"

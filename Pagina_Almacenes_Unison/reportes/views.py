@@ -3,6 +3,8 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, View, CreateView, DeleteView, UpdateView, TemplateView
+from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 
 from .models import Reporte
 from .forms import FormularioReporte
@@ -11,6 +13,24 @@ class ListaReportes(ListView):
     model = Reporte
     template_name = 'reportes/lista_reportes.html'
     context_object_name = 'reportes'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.rol == 'Admin':
+            # Usuario administrador ve todos los reportes
+            return Reporte.objects.all()
+        elif user.rol == 'Intendente':
+            # Usuario de intendencia ve solo sus propios reportes
+            return Reporte.objects.filter(solicitante=user)
+        else:
+            # Otros roles no tienen acceso a la lista de reportes
+            return Reporte.objects.none()
+        
+def lista_reportes_usuario(request):
+    reportes = Reporte.objects.filter(solicitante=request.user)
+    
+    context = {'reportes': reportes}
+    return render(request, 'Reporte_Usuario.html', context)
     
 class CrearReporte(CreateView):
     model = Reporte

@@ -1,3 +1,4 @@
+<!-- templates/tu_template.html -->
 {% extends "index.html" %}
 {% load static %}
 
@@ -7,22 +8,31 @@
         {% for reporte in reportes %}
             <hr>
             <p><b>Solicitud: </b>{{ reporte }}</p>
+            <p><b>Reporte: </b>{{ reporte.pk }}</p>
             <p><b>Fecha:</b> {{ reporte.fecha}}</p>
             
             <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
             {% for detalle in reporte.detallereporte_set.all %}
-                <p>Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }}</p>
+                <p>
+                    Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
+                    Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
+                </p>
             {% endfor %}
+
+            <!-- Mostrar el total gastado por reporte -->
+            <p>Total Gastado : {{ reporte.total_gastado|floatformat:2 }}</p>
             
+            {% if user.is_authenticated and user.rol == 'Admin' %} 
             <a href="{% url 'eliminar_reporte' pk=reporte.pk %}">Eliminar solicitud</a>
+             {% endif %}
             <hr>
         {% endfor %}
         
-        <!-- Agregar enlace para eliminar todos los reportes -->
+        {% if user.is_authenticated and user.rol == 'Admin' %}
         <a href="{% url 'borrar_todos_reportes' %}">Eliminar todos los reportes</a>
+        {% endif %}
     {% else %}
         <p>No hay solicitudes aún.</p>
     {% endif %}
     <br>
-    <a href="{% url 'hacer_reporte' %}">Hacer solicitud</a>
 {% endblock %}
