@@ -4,7 +4,10 @@
 {% block content %}
 
 <body id="content" class="portal-content">
-  <h1>Portal Admin</h1>
+
+<link rel="stylesheet" href="{% static 'Portal.css' %}">
+
+    <h1>Portal Admin</h1>
 
   <div id="Botones-Portal" class="portal-content">
     <a href="{% url 'lista_materiales' %}" class="materiales">
@@ -27,5 +30,5 @@
   </script>
   {% endif %}
 </body>
-<link rel="stylesheet" href="{% static 'Portal.css' %}">
+
 {% endblock %}

@@ -111,3 +111,19 @@ h2 {
 .btn-submit:hover {
   background-color: #218838;
 }
+
+.btn-link {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+.btn-link:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
