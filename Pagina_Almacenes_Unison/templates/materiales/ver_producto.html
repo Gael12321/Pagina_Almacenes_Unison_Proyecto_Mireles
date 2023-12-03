@@ -19,7 +19,7 @@
               <p><strong>Descripcion del Producto:</strong> {{ material.descripcion }}</p>
               <p><strong>Origen del Producto:</strong> {{ material.get_Origen_display }}</p>
               {% if material.unidades_o_paquetes %}
-              <p><strong>Origen del Producto:</strong> {{ material.cantidad_por_paquete }}</p>
+              <p><strong>Unidades del paquete:</strong> {{ material.cantidad_por_paquete }}</p>
               {% endif %}
               <img src="{{ material.imagen.url }}" alt="{{ material.nombre }}" class="img-thumbnail" width="100">
             </div>
