@@ -7,16 +7,16 @@
   <h1>Portal Admin</h1>
 
   <div id="Botones-Portal" class="portal-content">
-    <a href="{% url 'lista_materiales' %}">
+    <a href="{% url 'lista_materiales' %}" class="materiales">
       <img src="{% static 'img/materiales.png' %}" alt="Materiales">
     </a>
-    <a href="{% url 'lista_reportes' %}">
+    <a href="{% url 'lista_reportes' %}" class="reportes">
       <img src="{% static 'img/reportes.png' %}" alt="Reportes">
     </a>
-    <a href="{% url 'lista_gastos' %}">
+    <a href="{% url 'lista_gastos' %}" class="gastos">
       <img src="{% static 'img/gastos.png' %}" alt="Gastos">
     </a>
-    <a href="{% url 'crear_usuario' %}">
+    <a href="{% url 'crear_usuario' %}" class="Usuarios">
       <img src="{% static 'img/Usuario.png' %}" alt="Usuario">
     </a>
   </div>
@@ -25,7 +25,7 @@
   <script>
     alert("La cantidad de {{ material.nombre_articulo }} está por debajo del umbral mínimo");
   </script>
-{% endif %}
+  {% endif %}
 </body>
 <link rel="stylesheet" href="{% static 'Portal.css' %}">
 {% endblock %}
