@@ -16,6 +16,8 @@ class Material(models.Model):
     imagen = models.ImageField('Imagen')
     descripcion = models.CharField('Descripción',max_length=100,blank=True, null=True)
     umbral = models.IntegerField('Umbral mínimo')
+    unidades_o_paquetes = models.BooleanField('¿Se vende en unidades o paquetes?', default=True)
+    cantidad_por_paquete = models.PositiveIntegerField('Cantidad por paquete', blank=True, null=True)
     class Origen_Producto(models.TextChoices):
         UNISON   = 'Unison'
         EXTERIOR = 'Exterior'

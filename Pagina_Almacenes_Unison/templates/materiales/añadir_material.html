@@ -6,18 +6,103 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    <div>
-        <h2>Crear material</h2>
-        {% csrf_token %}
-        {{form.as_p}}
 
-        <button type="submit" class="button-signup" id="btn-submit">
-            Crear
-        </button>
-        <a href="{% url 'lista_materiales' %}" class="button-cancel">
-            Cancelar
-        </a>
-    </div>
-</form>
+<div class="container">
+    <form method="post" enctype="multipart/form-data" id="agregarProductoForm">
+        {% csrf_token %}
+
+        <div class="form-group row">
+            <label for="id_nombre_articulo" class="col-sm-3 col-form-label">Nombre del Artículo:</label>
+            <div class="col-sm-9">
+                {{ form.nombre_articulo }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_precio_unitario" class="col-sm-3 col-form-label">Precio Unitario:</label>
+            <div class="col-sm-9">
+                {{ form.precio_unitario }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_categoria" class="col-sm-3 col-form-label">Categoría:</label>
+            <div class="col-sm-9">
+                {{ form.categoria }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_unidades_o_paquetes" class="col-sm-3 col-form-label">¿Se vende en unidades o paquetes?</label>
+            <div class="col-sm-9">
+                {{ form.unidades_o_paquetes }}
+            </div>
+        </div>
+
+        <div class="form-group row" id="paquetesOptions">
+            <label for="id_cantidad_por_paquete" class="col-sm-3 col-form-label">Cantidad por paquete:</label>
+            <div class="col-sm-9">
+                {{ form.cantidad_por_paquete }}
+            </div>
+        </div>
+
+        <div class="form-group row" id="paquetesOptions">
+            <label for="id_cantidad_por_paquete" class="col-sm-3 col-form-label">Cantidad:</label>
+            <div class="col-sm-9">
+                {{ form.cantidad }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_imagen" class="col-sm-3 col-form-label">Imagen:</label>
+            <div class="col-sm-9">
+                {{ form.imagen }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_descripcion" class="col-sm-3 col-form-label">Descripción:</label>
+            <div class="col-sm-9">
+                {{ form.descripcion }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_umbral" class="col-sm-3 col-form-label">Umbral mínimo:</label>
+            <div class="col-sm-9">
+                {{ form.umbral }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="id_Origen" class="col-sm-3 col-form-label">Origen:</label>
+            <div class="col-sm-9">
+                {{ form.Origen }}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'lista_materiales' %}'">Cancelar</button>
+            </div>
+        </div>
+    </form> 
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_unidades_o_paquetes').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#paquetesOptions').show();
+                } else {
+                    $('#paquetesOptions').hide();
+                }
+            });
+
+            $('#id_unidades_o_paquetes').trigger('change');
+        });
+    </script>
+</div>
+
 {% endblock %}

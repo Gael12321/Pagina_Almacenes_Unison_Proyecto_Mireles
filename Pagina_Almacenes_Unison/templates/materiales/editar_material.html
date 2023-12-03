@@ -1,21 +1,75 @@
 {% extends "index.html" %}
 {% load static %}
 
+<style>
+    .hidden-field {
+        display: none;
+    }
+</style>
+
 {% block title %}
     Editar producto
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    <h2> Editar producto </h2>
-    {% csrf_token %}
-    {{form.as_p}}
+<div class="container">
+    <form method="post" enctype="multipart/form-data" class="my-4">
+        <h2 class="mb-4">Editar producto</h2>
+        {% csrf_token %}
 
-    <button type="submit" class="button-signup" id="btn-submit">
-        Crear
-    </button>
-    <a type="button" href="{% url 'lista_materiales' %}">
-        Cancelar
-    </a>
-</form>
+        <div class="form-group">
+            <label for="id_nombre_articulo">Nombre del Artículo:</label>
+            {{ form.nombre_articulo }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_precio_unitario">Precio Unitario:</label>
+            {{ form.precio_unitario }}
+        </div>
+        
+        {# Campo de cantidad con la clase CSS para ocultarlo visualmente #}
+        <div class="form-group {% if form.cantidad.value == '' %}hidden-field{% endif %}">
+            <label for="id_cantidad">Cantidad:</label>
+            {{ form.cantidad }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_categoria">Categoría:</label>
+            {{ form.categoria }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_unidades_o_paquetes">¿Se vende en unidades o paquetes?</label>
+            {{ form.unidades_o_paquetes }}
+        </div>
+
+        <div class="form-group" id="paquetesOptions">
+            <label for="id_cantidad_por_paquete">Cantidad por paquete:</label>
+            {{ form.cantidad_por_paquete }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_imagen">Imagen:</label>
+            {{ form.imagen }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_descripcion">Descripción:</label>
+            {{ form.descripcion }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_umbral">Umbral mínimo:</label>
+            {{ form.umbral }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_Origen">Origen:</label>
+            {{ form.Origen }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a href="{% url 'lista_materiales' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

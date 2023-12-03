@@ -21,27 +21,50 @@ class AñadirMaterial(CreateView):
     model = Material
     form_class = FormularioMaterial
     template_name = 'materiales/añadir_material.html'
-    succes_url = reverse_lazy('lista_materiales')
+    success_url = reverse_lazy('lista_materiales')
     
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
         form = FormularioMaterial(request.POST, request.FILES)
         if form.is_valid():
-            material = form.save(commit = False)
+            material = form.save(commit=False)
+
+            # Verifica si el producto es un paquete y si tiene cantidad_por_paquete definida
+            if material.unidades_o_paquetes and material.cantidad_por_paquete:
+                material.cantidad *= material.cantidad_por_paquete
+
             material.save()
             
-            Gasto.objects.create(producto=material, cantidad= material.cantidad, gasto=(material.precio_unitario * material.cantidad))
+            Gasto.objects.create(
+                producto=material,
+                cantidad=material.cantidad,
+                gasto=(material.precio_unitario * material.cantidad)
+            )
             return HttpResponseRedirect(reverse_lazy("lista_materiales"))
-                
-
         else:
-            form = FormularioMaterial(request.POST, request.FILES)
-            return render(request, 'materiales/añadir_material.html', {'form':form})
+            return render(request, 'materiales/añadir_material.html', {'form': form})
 
 class EditarMaterial(UpdateView):
     model = Material
     template_name = 'materiales/editar_material.html'
     form_class = FormularioMaterial
     success_url = reverse_lazy('lista_materiales')
+
+    def form_valid(self, form):
+        # Obtiene el material y actualiza su cantidad_por_paquete
+        material = form.save(commit=False)
+
+        # Verifica si el producto es un paquete y si tiene cantidad_por_paquete definida
+        if material.unidades_o_paquetes and material.cantidad_por_paquete is not None:
+            # Actualiza el valor de cantidad_por_paquete
+            material.cantidad_por_paquete = form.cleaned_data['cantidad_por_paquete']
+
+        material.save(update_fields=['cantidad_por_paquete'])  # Solo actualiza cantidad_por_paquete
+        return super().form_valid(form)
+
+
+
+
+
 
 class AgregarProducto(FormView):
     template_name = 'materiales/agregar_producto.html'
@@ -54,9 +77,13 @@ class AgregarProducto(FormView):
         return context
 
     def form_valid(self, form):
-        # Get the material and update its quantity
         material = self.get_context_data()['material']
         cantidad_a_agregar = form.cleaned_data['cantidad_a_agregar']
+
+        # Verifica si el producto es un paquete y si tiene cantidad_por_paquete definida
+        if material.unidades_o_paquetes and material.cantidad_por_paquete:
+            cantidad_a_agregar *= material.cantidad_por_paquete
+
         material.cantidad += cantidad_a_agregar
         material.save()
 
@@ -67,6 +94,8 @@ class AgregarProducto(FormView):
         )
 
         return super().form_valid(form)
+
+
     
 class TomarProductoView(TemplateView):  # Cambia a TemplateView para manejar solicitudes GET
     template_name = 'materiales/tomar_producto.html'
