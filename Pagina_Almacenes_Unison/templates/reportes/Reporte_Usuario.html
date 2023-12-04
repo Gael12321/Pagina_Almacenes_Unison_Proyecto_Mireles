@@ -22,7 +22,6 @@
                     <!-- Mostrar el total gastado por reporte -->
                     <p>Total Gastado por Reporte: {{ reporte.total_gastado|floatformat:2 }}</p>
                     
-                    <a href="{% url 'eliminar_reporte' pk=reporte.pk %}">Eliminar solicitud</a>
                     <hr>
                 {% endif %}
             {% endfor %}
