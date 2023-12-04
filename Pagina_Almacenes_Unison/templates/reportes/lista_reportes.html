@@ -3,8 +3,14 @@
 {% load static %}
 
 {% block content %}
-    <h2>Lista de productos</h2>
     {% if reportes %}
+    {% if user.is_authenticated and user.rol == 'Intendente' %}
+        {% with reporte=reportes.0 %} {# Tomar el primer reporte para obtener el usuario #}
+            <h2>Lista de reportes de {{ reporte.solicitante.username }}</h2>
+        {% endwith %}
+        {% else %}
+        <h2>Lista de reportes</h2>
+        {% endif %}   
         {% for reporte in reportes %}
             <hr>
             <p><b>Solicitud: </b>{{ reporte }}</p>
@@ -36,5 +42,6 @@
     {% else %}
         <p>No hay solicitudes aún.</p>
     {% endif %}
+    <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
     <br>
 {% endblock %}

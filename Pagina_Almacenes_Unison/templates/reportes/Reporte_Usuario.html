@@ -3,34 +3,34 @@
 
 {% block content %}
     {% if reportes %}
-        {% with user_name=request.user.username %}
-            <h2>Lista de productos de {{ user_name }}</h2>
-            {% for reporte in reportes %}
-                {% if reporte.solicitante == request.user %}
-                    <hr>
-                    <p><b>Reporte ID: </b>{{ reporte.id }}</p>
-                    <p><b>Fecha:</b> {{ reporte.fecha}}</p>
-                    
-                    <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
-                    {% for detalle in reporte.detallereporte_set.all %}
-                        <p>
-                            Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
-                            Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
-                        </p>
-                    {% endfor %}
-
-                    <!-- Mostrar el total gastado por reporte -->
-                    <p>Total Gastado por Reporte: {{ reporte.total_gastado|floatformat:2 }}</p>
-                    
-                    <hr>
-                {% endif %}
-            {% endfor %}
+        {% with reporte=reportes.0 %} {# Tomar el primer reporte para obtener el usuario #}
+            <h2>Lista de productos de {{ reporte.solicitante.username }}</h2>
         {% endwith %}
+        {% for reporte in reportes %}
+            <hr>
+            <p><b>Reporte ID: </b>{{ reporte.id }}</p>
+            <p><b>Fecha:</b> {{ reporte.fecha}}</p>
+            
+            <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
+            {% for detalle in reporte.detallereporte_set.all %}
+                <p>
+                    Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
+                    Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
+                </p>
+            {% endfor %}
+
+            <!-- Mostrar el total gastado por reporte -->
+            <p>Total Gastado por Reporte: {{ reporte.total_gastado|floatformat:2 }}</p>
+            
+            <a href="{% url 'eliminar_reporte' pk=reporte.pk %}">Eliminar solicitud</a>
+            <hr>
+        {% endfor %}
         
         <!-- Agregar enlace para eliminar todos los reportes -->
         <a href="{% url 'borrar_todos_reportes' %}">Eliminar todos los reportes</a>
-        <a href="{% url 'lista_reportes' %}"> Regresar a la lista de reportes</a>
     {% else %}
         <p>No hay solicitudes aún.</p>
     {% endif %}
+    <br>
+    <a href="{% url 'hacer_reporte' %}">Hacer solicitud</a>
 {% endblock %}

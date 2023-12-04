@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Gastos por Día</title>
+</head>
+<body>
+    <h1>Informe de Gastos por Día</h1>
+
+    <form method="get" action="{% url 'informe_gastos_por_mes' %}">
+        <label for="fecha">Seleccionar Fecha:</label>
+        <input type="date" id="fecha" name="fecha" value="{{ request.GET.fecha }}">
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Informe</th>
+                <th>Producto</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Gasto</th>
+                <th>Fecha</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for informe, gastos in informes.items %}
+                {% for gasto in gastos %}
+                    <tr>
+                        {% if forloop.first %}
+                            <td rowspan="{{ gastos|length }}">{{ informe }}</td>
+                        {% endif %}
+                        <td>{{ gasto.producto }}</td>
+                        <td>{{ gasto.producto.precio_unitario }}</td>
+                        <td>{{ gasto.cantidad }}</td>
+                        <td>{{ gasto.gasto }}</td>
+                        <td>{{ gasto.fecha }}</td>
+                        <td>{{ gasto.id }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
+
+</html>

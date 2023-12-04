@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 
-{%block content%}
+{% block content %}
     <h2>Lista de gastos</h2>
     {% if gastos %}
         {% for gasto in gastos %}
@@ -9,12 +9,16 @@
             <p><b>id de gasto: </b>{{ gasto.pk }}</p>
             <p><b>Producto:</b> {{ gasto.producto }}</p>
             <p><b>Precio unitario:</b> {{ gasto.producto.precio_unitario }}</p>
-            <p><b>Cantidad:</b> {{gasto.cantidad }} </p>
-            <p><b>Gasto</b>: ${{gasto.gasto}}</p>
-            <p><b>Fecha del gasto:</b> {{gasto.fecha}}</p>
+            <p><b>Cantidad:</b> {{ gasto.cantidad }} </p>
+            <p><b>Gasto</b>: ${{ gasto.gasto }}</p>
+            <p><b>Fecha del gasto:</b> {{ gasto.fecha }}</p>
             <hr>
         {% endfor %}
     {% else %}
         <p>No se han hecho gastos aún.</p>
     {% endif %}
-{%endblock%}
+    
+    <a href="{% url 'informe_gastos_por_mes' %}" class="btn btn-info">Gastos por mes</a>
+    <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
+    <br>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from usuarios.models import Usuario 
+from django.db.models import Sum
 
 # Create your models here.
 
@@ -31,6 +32,14 @@ class Gasto(models.Model):
     cantidad = models.DecimalField(max_digits=10, decimal_places=2)
     gasto = models.DecimalField('Gasto',max_digits=10,decimal_places=2)
     fecha = models.DateField('Fecha de gasto',auto_now=True)
+
+    def obtener_mes_y_anio(self):
+        return self.fecha.strftime('%Y-%m')
+
+    @classmethod
+    def obtener_gastos_totales_por_mes(cls):
+        return cls.objects.values('fecha__year', 'fecha__month').annotate(total_gastos=models.Sum('gasto')).order_by('fecha__year', 'fecha__month')
+
 
 class Carrito(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)

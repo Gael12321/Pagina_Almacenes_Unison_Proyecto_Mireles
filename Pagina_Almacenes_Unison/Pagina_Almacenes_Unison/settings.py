@@ -142,6 +142,7 @@ AUTH_USER_MODEL = 'usuarios.Usuario'
 # Configuración de URL Login
 LOGIN_URL = reverse_lazy('inicio_sesion')
 LOGOUT_REDIRECT_URL = reverse_lazy('inicio_sesion')
+LOGIN_REDIRECT_URL = reverse_lazy('inicio_sesion')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

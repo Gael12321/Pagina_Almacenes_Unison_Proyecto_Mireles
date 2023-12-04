@@ -56,6 +56,7 @@ urlpatterns += [
 urlpatterns += [
     path('lista-materiales/', login_required(ListaMateriales.as_view()), name='lista_materiales'),
     path('gastos/', login_required(ListaGastos.as_view()), name='lista_gastos'),
+    path('informe-gastos-por-mes/', InformeGastosPorDia.as_view(), name='informe_gastos_por_mes'),
     path('añadir-material/', login_required(AñadirMaterial.as_view()), name='añadir_material'),
     path('agregar-material/<int:pk>/', login_required(AgregarProducto.as_view()), name='agregar_material'),
     path('editar-material/<int:pk>/', login_required(EditarMaterial.as_view()), name='editar_material'),

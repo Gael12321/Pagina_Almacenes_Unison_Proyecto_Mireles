@@ -2,6 +2,10 @@ from typing import Any
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
+from datetime import datetime
+from itertools import groupby
+
+from django.db.models import Sum 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, FormView, DetailView, TemplateView, View
 
@@ -61,11 +65,6 @@ class EditarMaterial(UpdateView):
         material.save(update_fields=['cantidad_por_paquete'])  # Solo actualiza cantidad_por_paquete
         return super().form_valid(form)
 
-
-
-
-
-
 class AgregarProducto(FormView):
     template_name = 'materiales/agregar_producto.html'
     form_class = FormularioAgregarProducto
@@ -94,9 +93,7 @@ class AgregarProducto(FormView):
         )
 
         return super().form_valid(form)
-
-
-    
+   
 class TomarProductoView(TemplateView):  # Cambia a TemplateView para manejar solicitudes GET
     template_name = 'materiales/tomar_producto.html'
 
@@ -142,7 +139,25 @@ class ListaGastos(ListView):
     model = Gasto
     template_name = 'materiales/lista_gastos.html'
     context_object_name = 'gastos'
+
+      
+class InformeGastosPorDia(ListView):
+    model = Gasto
+    template_name = 'materiales/informe_gastos_por_mes.html'
+    context_object_name = 'informes'
     
+    def get_queryset(self):
+        fecha_seleccionada = self.request.GET.get('fecha', None)
+        if fecha_seleccionada:
+            fecha_seleccionada = datetime.strptime(fecha_seleccionada, '%Y-%m-%d')
+            gastos = Gasto.objects.filter(fecha=fecha_seleccionada).order_by('id')
+            grouped_gastos = {key: list(group) for key, group in groupby(gastos, key=lambda x: x.id)}
+            return grouped_gastos
+        else:
+            return {}
+
+        
+        
 class VerProducto(DetailView):
     model = Material
     template_name = 'materiales/ver_producto.html'  # Cambia al nombre correcto de tu plantilla
@@ -228,7 +243,6 @@ def borrar_carrito(request):
     carrito_items = Carrito.objects.filter(usuario=request.user)
     carrito_items.delete()
     return redirect('ver_carrito')
-
 
 def agregar_al_carrito_bulk(request):
     if request.method == 'POST':
