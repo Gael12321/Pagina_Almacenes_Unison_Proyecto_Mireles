@@ -21,10 +21,12 @@
 
             <!-- Mostrar el total gastado por reporte -->
             <p>Total Gastado : {{ reporte.total_gastado|floatformat:2 }}</p>
+                   
+            {% if user.is_authenticated and user.rol == 'Admin' %}
+            <!-- Agregar un enlace al detalle del usuario -->
+            <p><b>Solicitante: </b><a href="{% url 'Reporte_Usuario' pk=reporte.solicitante.pk %}">{{ reporte.solicitante.username }}</a></p>
+            {% endif %} 
             
-            {% if user.is_authenticated and user.rol == 'Admin' %} 
-            <a href="{% url 'eliminar_reporte' pk=reporte.pk %}">Eliminar solicitud</a>
-             {% endif %}
             <hr>
         {% endfor %}
         
