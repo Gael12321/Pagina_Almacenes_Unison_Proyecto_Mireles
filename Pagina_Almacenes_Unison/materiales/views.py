@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from datetime import datetime
 from itertools import groupby
-
 from django.db.models import Sum 
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, FormView, DetailView, TemplateView, View
 
@@ -94,7 +94,7 @@ class AgregarProducto(FormView):
 
         return super().form_valid(form)
    
-class TomarProductoView(TemplateView):  # Cambia a TemplateView para manejar solicitudes GET
+class TomarProductoView(TemplateView):  
     template_name = 'materiales/tomar_producto.html'
 
     def get_context_data(self, **kwargs):
@@ -141,22 +141,25 @@ class ListaGastos(ListView):
     context_object_name = 'gastos'
 
       
-class InformeGastosPorDia(ListView):
+class InformeGastosPorMes(ListView):
     model = Gasto
     template_name = 'materiales/informe_gastos_por_mes.html'
     context_object_name = 'informes'
-    
-    def get_queryset(self):
-        fecha_seleccionada = self.request.GET.get('fecha', None)
-        if fecha_seleccionada:
-            fecha_seleccionada = datetime.strptime(fecha_seleccionada, '%Y-%m-%d')
-            gastos = Gasto.objects.filter(fecha=fecha_seleccionada).order_by('id')
-            grouped_gastos = {key: list(group) for key, group in groupby(gastos, key=lambda x: x.id)}
-            return grouped_gastos
-        else:
-            return {}
 
-        
+    def get_queryset(self):
+        mes_seleccionado = self.request.GET.get('mes', None)
+        if mes_seleccionado:
+            fecha_seleccionada = datetime.strptime(mes_seleccionado, '%Y-%m')
+            self.total_gastos = Gasto.objects.filter(fecha__year=fecha_seleccionada.year, fecha__month=fecha_seleccionada.month).aggregate(total=Sum('gasto'))['total']
+            return Gasto.objects.filter(fecha__year=fecha_seleccionada.year, fecha__month=fecha_seleccionada.month)
+        else:
+            self.total_gastos = Gasto.objects.aggregate(total=Sum('gasto'))['total']
+            return Gasto.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_gastos'] = self.total_gastos
+        return context
         
 class VerProducto(DetailView):
     model = Material
