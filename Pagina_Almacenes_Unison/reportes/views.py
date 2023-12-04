@@ -2,11 +2,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, View, CreateView, DeleteView, UpdateView, TemplateView
+from django.views.generic import ListView, View, CreateView, DeleteView, UpdateView, TemplateView, DetailView
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 
-from .models import Reporte
+from .models import Reporte, Usuario
 from .forms import FormularioReporte
 
 class ListaReportes(ListView):
@@ -25,12 +25,17 @@ class ListaReportes(ListView):
         else:
             # Otros roles no tienen acceso a la lista de reportes
             return Reporte.objects.none()
-        
-def lista_reportes_usuario(request):
-    reportes = Reporte.objects.filter(solicitante=request.user)
-    
-    context = {'reportes': reportes}
-    return render(request, 'Reporte_Usuario.html', context)
+
+class ReporteUsuario(DetailView):
+    model = Usuario  # Asegúrate de que estás utilizando el modelo correcto para los usuarios
+    template_name = 'reportes/Reporte_Usuario.html'
+    context_object_name = 'user_reportes'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        Usuario = self.get_object()  # Esto obtiene el objeto User asociado al ID proporcionado en la URL
+        context['reportes'] = Reporte.objects.filter(solicitante=Usuario)
+        return context
     
 class CrearReporte(CreateView):
     model = Reporte

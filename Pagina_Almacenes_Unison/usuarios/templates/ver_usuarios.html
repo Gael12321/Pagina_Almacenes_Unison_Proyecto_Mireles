@@ -10,6 +10,7 @@
   <p><strong>Rol:</strong> {{ usuario.get_rol_display }}</p>
   <p><strong>Edificio:</strong> {{ usuario.edificio }}</p>
   <p><strong>Piso:</strong> {{ usuario.piso }}</p>
+  <p><strong>Solicitudes del Usuario:</strong> <a href="{% url 'Reporte_Usuario' pk=usuario.pk %}">Ver Solicitudes</a></p>
 
   <a href="{% url 'editar_usuario' pk=usuario.pk %}">Editar Usuario</a>
   <a href="{% url 'eliminar_usuario' pk=usuario.pk %}">Eliminar Usuario</a>
