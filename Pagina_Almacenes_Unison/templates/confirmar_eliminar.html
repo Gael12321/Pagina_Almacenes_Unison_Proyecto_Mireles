@@ -1,10 +1,74 @@
 {% extends "index.html" %}
 {% load static %}
 
-{%block content%}
-<form method="post">{% csrf_token %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <style>
+    /* Agregar estilos personalizados aquí */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    form {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      width: 45%;
+      display: inline-block;
+      text-align: center;
+      margin-right: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    input[type="button"] {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    input[type="button"]:hover {
+      background-color: #bd2130;
+    }
+
+    input[type="submit"]:focus,
+    input[type="button"]:focus {
+      outline: none;
+    }
+  </style>
+
+  <form method="post">
+    {% csrf_token %}
     <p>¿Estás seguro de la eliminación de: "{{ object }}"?</p>
 
     <input type="submit" value="Confirmar">
-</form>
-{%endblock%}
+    <input type="button" value="Cancelar" onclick="window.history.back()" />
+  </form>
+{% endblock %}

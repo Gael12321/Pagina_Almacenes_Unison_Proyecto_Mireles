@@ -2,35 +2,149 @@
 {% load static %}
 
 {% block content %}
+    <style>
+        /* Estilos personalizados */
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease-in-out;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .btn-danger {
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
+
+        .btn-orange {
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #f58220;
+            border: 1px solid #f58220;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .btn-orange:hover {
+            background-color: #e76b1a;
+            border-color: #e76b1a;
+        }
+
+        .btn-make-request {
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 16px;
+        }
+
+        .btn-make-request:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .solicitudes {
+            margin: 20px; /* Añade margen a las solicitudes */
+        }
+
+        
+        .btn {
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 8px 20px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border: 1px solid #ffc107;
+            color: #000;
+        }
+    </style>
+
     {% if reportes %}
         {% with reporte=reportes.0 %} {# Tomar el primer reporte para obtener el usuario #}
             <h2>Lista de productos de {{ reporte.solicitante.username }}</h2>
         {% endwith %}
-        {% for reporte in reportes %}
-            <hr>
-            <p><b>Reporte ID: </b>{{ reporte.id }}</p>
-            <p><b>Fecha:</b> {{ reporte.fecha}}</p>
-            
-            <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
-            {% for detalle in reporte.detallereporte_set.all %}
-                <p>
-                    Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
-                    Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
-                </p>
-            {% endfor %}
+        <div class="solicitudes">
+            {% for reporte in reportes %}
+                <hr>
+                <p><b>Reporte ID: </b>{{ reporte.id }}</p>
+                <p><b>Fecha:</b> {{ reporte.fecha}}</p>
+                
+                <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
+                {% for detalle in reporte.detallereporte_set.all %}
+                    <p>
+                        Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
+                        Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
+                    </p>
+                {% endfor %}
 
-            <!-- Mostrar el total gastado por reporte -->
-            <p>Total Gastado por Reporte: {{ reporte.total_gastado|floatformat:2 }}</p>
-            
-            <a href="{% url 'eliminar_reporte' pk=reporte.pk %}">Eliminar solicitud</a>
-            <hr>
-        {% endfor %}
+                <!-- Mostrar el total gastado por reporte -->
+                <p>Total Gastado por Reporte: {{ reporte.total_gastado|floatformat:2 }}</p>
+                
+                <a href="{% url 'eliminar_reporte' pk=reporte.pk %}" class="btn btn-orange">Eliminar solicitud</a>
+                <hr>
+            {% endfor %}
+        </div>
         
         <!-- Agregar enlace para eliminar todos los reportes -->
-        <a href="{% url 'borrar_todos_reportes' %}">Eliminar todos los reportes</a>
+        <a href="{% url 'borrar_todos_reportes' %}" class="btn btn-danger mt-4">Eliminar todos</a>
+        <a href="{% url 'lista_usuario' %}" class="btn btn-warning">Volver a la lista de usuarios </a>
     {% else %}
         <p>No hay solicitudes aún.</p>
+        <a href="{% url 'lista_usuario' %}" class="btn btn-warning">Volver a la lista de usuarios </a>
     {% endif %}
-    <br>
-    <a href="{% url 'hacer_reporte' %}">Hacer solicitud</a>
+    
 {% endblock %}

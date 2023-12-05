@@ -6,20 +6,65 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    <div >
-        <h2>Agregar al produto</h2>
-        <p><b>Artículo:</b> {{ material.nombre_articulo }}</p>
-        <p><b>Cantidad actual:</b> {{ material.cantidad }}</p>
-        {% csrf_token %}
-        {{form.as_p}}
+  <link rel="stylesheet" href="{% static 'lista_materiales.css' %}">
+  <style>
+    .form-container {
+      width: 50%;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        <button type="submit" class="button-signup" id="btn-submit">
-            Agregar 
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .btn-agregar-material {
+      background-color: #28a745;
+      border: 1px solid #28a745;
+      color: #fff;
+    }
+
+    .btn-volver-portal {
+      background-color: #ffc107;
+      border: 1px solid #ffc107;
+      color: #fff;
+    }
+  </style>
+
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-container">
+      <h2>Agregar al producto</h2>
+      <p><b>Artículo:</b> {{ material.nombre_articulo }}</p>
+      <p><b>Cantidad actual:</b> {{ material.cantidad }}</p>
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="button-container">
+        <button type="submit" class="btn btn-agregar-material">
+          Agregar
         </button>
-        <a type="button" href="{% url 'lista_materiales' %}">
-            Cancelar
+        <a href="{% url 'lista_materiales' %}" class="btn btn-volver-portal">
+          Cancelar
         </a>
+      </div>
     </div>
-</form>
+  </form>
 {% endblock %}

@@ -2,14 +2,49 @@
 {% load static %}
 
 {% block content %}
-    <h2>Borrar Todos los Reportes</h2>
+    <style>
+        /* Estilos personalizados */
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
 
-    <form method="post">
-        {% csrf_token %}
-        <p>¿Estás seguro de la eliminación de todos los reportes?</p>
-        <input type="submit" value="Confirmar">
-    </form>
+        .btn {
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 8px 20px;
+            font-size: 16px;
+        }
 
-    <br>
-    <a href="{% url 'lista_reportes' %}">Volver a la lista de reportes</a>
+        .btn-danger {
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            color: #fff;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border: 1px solid #ffc107;
+            color: #000;
+            margin-top: 20px; /* Ajusta el espacio superior del botón */
+        }
+    </style>
+
+    <div class="container mt-5">
+        <h2>Borrar Todos los Reportes</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <p>¿Estás seguro de eliminar todos los reportes?</p>
+            <button type="submit" class="btn btn-danger">Confirmar</button>
+        </form>
+
+        <div class="mt-4">
+            <a href="{% url 'lista_reportes' %}" class="btn btn-warning">Volver a la lista de reportes</a>
+        </div>
+    </div>
 {% endblock %}

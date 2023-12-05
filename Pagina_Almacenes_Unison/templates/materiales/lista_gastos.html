@@ -2,23 +2,83 @@
 {% load static %}
 
 {% block content %}
-    <h2>Lista de gastos</h2>
-    {% if gastos %}
-        {% for gasto in gastos %}
-            <hr>
-            <p><b>id de gasto: </b>{{ gasto.pk }}</p>
-            <p><b>Producto:</b> {{ gasto.producto }}</p>
-            <p><b>Precio unitario:</b> {{ gasto.producto.precio_unitario }}</p>
-            <p><b>Cantidad:</b> {{ gasto.cantidad }} </p>
-            <p><b>Gasto</b>: ${{ gasto.gasto }}</p>
-            <p><b>Fecha del gasto:</b> {{ gasto.fecha }}</p>
-            <hr>
-        {% endfor %}
-    {% else %}
-        <p>No se han hecho gastos aún.</p>
-    {% endif %}
-    
-    <a href="{% url 'informe_gastos_por_mes' %}" class="btn btn-info">Gastos por mes</a>
-    <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
-    <br>
+    <style>
+        /* Estilos personalizados */
+        .container {
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            margin-bottom: 5px;
+        }
+
+        .btn-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .btn {
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 8px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            border: 1px solid #17a2b8;
+            color: #fff;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border: 1px solid #ffc107;
+            color: #fff;
+        }
+    </style>
+
+    <div class="container">
+        <h2>Lista de gastos</h2>
+        {% if gastos %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for gasto in gastos %}
+                    <div class="col">
+                        <div class="card border-info h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">ID de gasto: {{ gasto.pk }}</h5>
+                                <p class="card-text"><b>Producto:</b> {{ gasto.producto }}</p>
+                                <p class="card-text"><b>Precio unitario:</b> {{ gasto.producto.precio_unitario }}</p>
+                                <p class="card-text"><b>Cantidad:</b> {{ gasto.cantidad }} </p>
+                                <p class="card-text"><b>Gasto:</b> ${{ gasto.gasto }}</p>
+                                <p class="card-text"><b>Fecha del gasto:</b> {{ gasto.fecha }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No se han hecho gastos aún.</p>
+        {% endif %}
+        
+        <div class="btn-container">
+            <a href="{% url 'informe_gastos_por_mes' %}" class="btn btn-info">Gastos por mes</a>
+            <a href="{% url 'portal_admin' %}" class="btn btn-warning">Volver al portal</a>
+        </div>
+    </div>
 {% endblock %}

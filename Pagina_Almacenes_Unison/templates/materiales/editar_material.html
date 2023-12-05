@@ -1,75 +1,120 @@
 {% extends "index.html" %}
 {% load static %}
 
-<style>
-    .hidden-field {
-        display: none;
-    }
-</style>
-
 {% block title %}
     Editar producto
 {% endblock %}
 
 {% block content %}
-<div class="container">
+  <link rel="stylesheet" href="{% static 'lista_materiales.css' %}">
+  <style>
+    .container {
+      margin-top: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .btn {
+      border-radius: 5px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: 1px solid #007bff;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border: 1px solid #6c757d;
+      color: #fff;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: calc(100% - 20px);
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    .hidden-field {
+      display: none;
+    }
+  </style>
+
+  <div class="container">
     <form method="post" enctype="multipart/form-data" class="my-4">
-        <h2 class="mb-4">Editar producto</h2>
-        {% csrf_token %}
+      <h2 class="mb-4">Editar producto</h2>
+      {% csrf_token %}
 
-        <div class="form-group">
-            <label for="id_nombre_articulo">Nombre del Artículo:</label>
-            {{ form.nombre_articulo }}
-        </div>
+      <div class="form-group">
+        <label for="id_nombre_articulo">Nombre del Artículo:</label>
+        {{ form.nombre_articulo }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_precio_unitario">Precio Unitario:</label>
-            {{ form.precio_unitario }}
-        </div>
-        
-        {# Campo de cantidad con la clase CSS para ocultarlo visualmente #}
-        <div class="form-group {% if form.cantidad.value == '' %}hidden-field{% endif %}">
-            <label for="id_cantidad">Cantidad:</label>
-            {{ form.cantidad }}
-        </div>
+      <div class="form-group">
+        <label for="id_precio_unitario">Precio Unitario:</label>
+        {{ form.precio_unitario }}
+      </div>
+      
+      {# Campo de cantidad con la clase CSS para ocultarlo visualmente #}
+      <div class="form-group {% if form.cantidad.value == '' %}hidden-field{% endif %}">
+        <label for="id_cantidad">Cantidad:</label>
+        {{ form.cantidad }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_categoria">Categoría:</label>
-            {{ form.categoria }}
-        </div>
+      <div class="form-group">
+        <label for="id_categoria">Categoría:</label>
+        {{ form.categoria }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_unidades_o_paquetes">¿Se vende en unidades o paquetes?</label>
-            {{ form.unidades_o_paquetes }}
-        </div>
+      <div class="form-group">
+        <label for="id_unidades_o_paquetes">¿Se vende en unidades o paquetes?</label>
+        {{ form.unidades_o_paquetes }}
+      </div>
 
-        <div class="form-group" id="paquetesOptions">
-            <label for="id_cantidad_por_paquete">Cantidad por paquete:</label>
-            {{ form.cantidad_por_paquete }}
-        </div>
+      <div class="form-group" id="paquetesOptions">
+        <label for="id_cantidad_por_paquete">Cantidad por paquete:</label>
+        {{ form.cantidad_por_paquete }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_imagen">Imagen:</label>
-            {{ form.imagen }}
-        </div>
+      <div class="form-group">
+        <label for="id_imagen">Imagen:</label>
+        {{ form.imagen }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_descripcion">Descripción:</label>
-            {{ form.descripcion }}
-        </div>
+      <div class="form-group">
+        <label for="id_descripcion">Descripción:</label>
+        {{ form.descripcion }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_umbral">Umbral mínimo:</label>
-            {{ form.umbral }}
-        </div>
+      <div class="form-group">
+        <label for="id_umbral">Umbral mínimo:</label>
+        {{ form.umbral }}
+      </div>
 
-        <div class="form-group">
-            <label for="id_Origen">Origen:</label>
-            {{ form.Origen }}
-        </div>
+      <div class="form-group">
+        <label for="id_Origen">Origen:</label>
+        {{ form.Origen }}
+      </div>
 
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{% url 'lista_materiales' %}" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+      <a href="{% url 'lista_materiales' %}" class="btn btn-secondary">Cancelar</a>
     </form>
-</div>
+  </div>
 {% endblock %}

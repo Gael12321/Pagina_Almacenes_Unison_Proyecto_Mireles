@@ -1,17 +1,88 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block content %}
-  <h2>Lista de Usuarios</h2>
-  
-  <ul>
-    {% for usuario in usuarios %}
-      <li>
-        <a href="{% url 'ver_usuarios' pk=usuario.pk %}">{{ usuario.username }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-  
-  <a href="{% url 'crear_usuario' %}">Crear Nuevo Usuario</a>
-  <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
+    <style>
+        /* Estilos personalizados */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
 
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #666;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+        .btn-info,
+        .btn-create {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-info {
+            background-color: #ffca2c;
+            border: 1px solid #ffca2c;
+            color: #fff;
+        }
+
+        
+
+        .btn-create {
+            background-color: #28a745;
+            border: 1px solid #28a745;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+       
+    </style>
+
+    <div class="container mt-5">
+        <h2>Lista de Usuarios</h2>
+        
+        <ul>
+            {% for usuario in usuarios %}
+                <li>
+                    <a href="{% url 'ver_usuarios' pk=usuario.pk %}">{{ usuario.username }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'crear_usuario' %}" class="btn btn-create">Crear Nuevo Usuario</a>
+            <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
+        </div>
+    </div>
 {% endblock %}

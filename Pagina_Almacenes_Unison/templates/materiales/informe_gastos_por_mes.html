@@ -4,6 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informe de Gastos por Mes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input[type="month"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tfoot td {
+            font-weight: bold;
+        }
+
+        a.btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #17a2b8;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        a.btn:hover {
+            background-color: #117a8b;
+        }
+    </style>
 </head>
 <body>
     <h1>Informe de Gastos por Mes</h1>
@@ -14,18 +94,19 @@
         <button type="submit">Filtrar</button>
     </form>
 
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th>Producto</th>
                 <th>Precio Unitario</th>
                 <th>Cantidad</th>
-                <th>Gasto</th>
+                <th>Total Gasto</th>
                 <th>Fecha</th>
                 <th>ID</th>
             </tr>
         </thead>
         <tbody>
+            <!-- Datos del informe -->
             {% for gasto in informes %}
                 <tr>
                     <td>{{ gasto.producto }}</td>
@@ -37,15 +118,8 @@
                 </tr>
             {% endfor %}
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="2"></td>
-                <td>Total:</td>
-                <td>{{ total_gastos }}</td>
-            </tr>
-        </tfoot>
+        
     </table>
-    <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
-
+    <a href="{% url 'portal_admin' %}" class="btn">Volver al portal</a>
 </body>
 </html>

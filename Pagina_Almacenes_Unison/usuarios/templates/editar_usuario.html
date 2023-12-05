@@ -1,13 +1,94 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block content %}
-  <h2>Editar Usuario</h2>
+    <style>
+        /* Estilos personalizados */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
-  </form>
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
 
-  <a href="{% url 'lista_usuario' %}">Volver a la Lista de Usuarios</a>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px; /* Separación del botón "Guardar Cambios" */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo del botón "Volver a la Lista de Usuarios" */
+        .btn-back {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #ffc107;
+            border: 1px solid #ffc107;
+            color: #333;
+            transition: background-color 0.3s ease-in-out;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .btn-back:hover {
+            background-color: #ffca2c;
+            border-color: #ffca2c;
+            color: #333;
+        }
+    </style>
+
+    <div class="container">
+        <h2>Editar Usuario</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar Cambios</button>
+        </form>
+
+        <a href="{% url 'lista_usuario' %}" class="btn-back">Volver a la Lista de Usuarios</a>
+    </div>
 {% endblock %}

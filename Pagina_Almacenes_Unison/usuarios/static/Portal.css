@@ -1,62 +1,92 @@
+/* Estilos para el contenido del portal */
 .portal-content {
   background-color: #f2f2f2;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center; /* Centra el contenido */
 }
 
+/* Estilos para los títulos */
 .portal-content h1 {
-  text-align: center;
   font-size: 3rem;
   margin-bottom: 2rem;
+  color: #7f7f7f; /* Color de título similar al de inicio de sesión */
 }
 
+/* Estilos para la sección de botones */
 #Botones-Portal {
-  padding: 1.3em 3em;
-  font-size: 12px;
+  padding: 60px; /* Ajusta el espaciado según tus preferencias */
+  display: flex;
+  justify-content: space-around; /* Distribuye uniformemente los botones */
+  flex-wrap: wrap; /* Permite que los botones se ajusten al tamaño del contenedor */
+  margin-top: 40px; /* Espaciado superior */
+}
+
+/* Estilos para los botones */
+#Botones-Portal a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  padding: 20px 40px;
+  font-size: 16px;
   text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   font-weight: 500;
-  color: #000;
-  background-color: #fff;
-  border: none;
+  color: #fff;
+  background-color: rgba(127, 127, 127, 1); /* Cambia el color del fondo del botón aquí */
+  border: 2px solid rgba(127, 127, 127, 1); /* Cambia el color del borde del botón */
   border-radius: 45px;
-  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   cursor: pointer;
   outline: none;
-  display: flex;
-  justify-content: space-between;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
-#Botones-Portal a {
-  display: block;
-  width: 100%;
-  height: 100%;
+/* Efecto de resplandor en los botones */
+#Botones-Portal a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 0 10px 5px rgba(17, 97, 237, 0); /* Efecto de resplandor */
+  transition: box-shadow 0.3s ease;
+}
+
+#Botones-Portal a:hover::before {
+  box-shadow: 0 0 10px 5px rgba(17, 97, 237, 0.7); /* Ajusta el resplandor */
 }
 
 #Botones-Portal a:hover {
-  background-color: #23c483;
-  box-shadow: 4px 15px 20px rgba(46, 229, 157, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
+  color: #fff; /* Color del texto al pasar el ratón */
+  transform: translateY(-5px); /* Efecto de elevación */
 }
 
 #Botones-Portal a:focus {
   outline: none;
-  box-shadow: 4px 15px 20px rgba(46, 229, 157, 0.6);
+  box-shadow: 0 0 10px 5px rgba(17, 97, 237, 0.7); /* Resalta el botón enfocado */
 }
 
-#Botones-Portal a:active {
-  transform: translateY(-1px);
+/* Estilos para las imágenes dentro de los botones */
+#Botones-Portal img {
+  max-width: 80px;
+  max-height: 80px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border: none !important; /* Asegura que no haya ningún borde */
+  outline: none !important; /* Asegura que no haya ningún contorno */
 }
 
-#Botones-Portal a img { 
-  max-width: 100%;
-  max-height: 100%;
-  width: 255px; /* Adjust the width according to your preference */
-  height: 255px; /* Adjust the height according to your preference */
-  object-fit: cover; /* Ensure the image covers the entire container */
+/* Estilos para la barra redondeada */
+.barra-redondeada {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #ddd; /* Color gris ligeramente más oscuro */
+  padding: 10px;
 }
-

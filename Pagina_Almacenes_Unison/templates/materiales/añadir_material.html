@@ -6,103 +6,140 @@
 {% endblock %}
 
 {% block content %}
+  <link rel="stylesheet" href="{% static 'lista_materiales.css' %}">
+  <style>
+    .container {
+      margin-top: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-<div class="container">
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .btn {
+      border-radius: 5px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: 1px solid #007bff;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border: 1px solid #6c757d;
+      color: #fff;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: calc(100% - 20px);
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    select {
+      width: calc(100% - 20px);
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    .btn-container {
+      margin-top: 20px;
+      text-align: right;
+    }
+  </style>
+
+  <div class="container">
     <form method="post" enctype="multipart/form-data" id="agregarProductoForm">
-        {% csrf_token %}
+      {% csrf_token %}
 
-        <div class="form-group row">
-            <label for="id_nombre_articulo" class="col-sm-3 col-form-label">Nombre del Artículo:</label>
-            <div class="col-sm-9">
-                {{ form.nombre_articulo }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_nombre_articulo">Nombre del Artículo:</label>
+        {{ form.nombre_articulo }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_precio_unitario" class="col-sm-3 col-form-label">Precio Unitario:</label>
-            <div class="col-sm-9">
-                {{ form.precio_unitario }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_precio_unitario">Precio Unitario:</label>
+        {{ form.precio_unitario }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_categoria" class="col-sm-3 col-form-label">Categoría:</label>
-            <div class="col-sm-9">
-                {{ form.categoria }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_categoria">Categoría:</label>
+        {{ form.categoria }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_unidades_o_paquetes" class="col-sm-3 col-form-label">¿Se vende en unidades o paquetes?</label>
-            <div class="col-sm-9">
-                {{ form.unidades_o_paquetes }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label>¿Se vende en unidades o paquetes?</label>
+        {{ form.unidades_o_paquetes }}
+      </div>
 
-        <div class="form-group row" id="paquetesOptions">
-            <label for="id_cantidad_por_paquete" class="col-sm-3 col-form-label">Cantidad por paquete:</label>
-            <div class="col-sm-9">
-                {{ form.cantidad_por_paquete }}
-            </div>
-        </div>
+      <div class="form-group" id="paquetesOptions" style="display: none;">
+        <label for="id_cantidad_por_paquete">Cantidad por paquete:</label>
+        {{ form.cantidad_por_paquete }}
+      </div>
 
-        <div class="form-group row" id="paquetesOptions">
-            <label for="id_cantidad_por_paquete" class="col-sm-3 col-form-label">Cantidad:</label>
-            <div class="col-sm-9">
-                {{ form.cantidad }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_cantidad">Cantidad:</label>
+        {{ form.cantidad }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_imagen" class="col-sm-3 col-form-label">Imagen:</label>
-            <div class="col-sm-9">
-                {{ form.imagen }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_imagen">Imagen:</label>
+        {{ form.imagen }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_descripcion" class="col-sm-3 col-form-label">Descripción:</label>
-            <div class="col-sm-9">
-                {{ form.descripcion }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_descripcion">Descripción:</label>
+        {{ form.descripcion }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_umbral" class="col-sm-3 col-form-label">Umbral mínimo:</label>
-            <div class="col-sm-9">
-                {{ form.umbral }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_umbral">Umbral mínimo:</label>
+        {{ form.umbral }}
+      </div>
 
-        <div class="form-group row">
-            <label for="id_Origen" class="col-sm-3 col-form-label">Origen:</label>
-            <div class="col-sm-9">
-                {{ form.Origen }}
-            </div>
-        </div>
+      <div class="form-group">
+        <label for="id_Origen">Origen:</label>
+        {{ form.Origen }}
+      </div>
 
-        <div class="form-group row">
-            <div class="col-sm-9 offset-sm-3">
-                <button type="submit" class="btn btn-primary">Agregar Producto</button>
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'lista_materiales' %}'">Cancelar</button>
-            </div>
+      <div class="form-group">
+        <div class="btn-container">
+          <button type="submit" class="btn btn-primary">Agregar Producto</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'lista_materiales' %}'">Cancelar</button>
         </div>
-    </form> 
+      </div>
+    </form>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#id_unidades_o_paquetes').change(function() {
-                if ($(this).is(':checked')) {
-                    $('#paquetesOptions').show();
-                } else {
-                    $('#paquetesOptions').hide();
-                }
-            });
-
-            $('#id_unidades_o_paquetes').trigger('change');
+      $(document).ready(function() {
+        $('#id_unidades_o_paquetes').change(function() {
+          if ($(this).is(':checked')) {
+            $('#paquetesOptions').show();
+          } else {
+            $('#paquetesOptions').hide();
+          }
         });
-    </script>
-</div>
 
+        $('#id_unidades_o_paquetes').trigger('change');
+      });
+    </script>
+  </div>
 {% endblock %}

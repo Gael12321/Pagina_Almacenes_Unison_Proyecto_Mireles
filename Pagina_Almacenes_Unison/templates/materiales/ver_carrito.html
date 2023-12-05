@@ -1,4 +1,3 @@
-<!-- ver_carrito.html -->
 {% extends "index.html" %}
 {% load static %}
 
@@ -7,62 +6,164 @@
 {% endblock %}
 
 {% block content %}
-  <h2 class="text-center mb-4">Tu Carrito</h2>
+  <link rel="stylesheet" href="{% static 'lista_materiales.css' %}">
+  <style>
+    .table-container {
+      margin-top: 20px;
+    }
 
-  {% if total_items > 0 %}
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Artículo</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in carrito_items %}
+    .table {
+      width: 90%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 0 20px;
+    }
+
+    thead th {
+      background-color: #1161ed;
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    td, th {
+      padding: 10px;
+      border: 1px solid #dee2e6;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .actions a {
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+      margin: 0 5px;
+    }
+
+    .eliminar {
+      background-color: #dc3545;
+      border: 1px solid #dc3545;
+      color: #fff;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .btn-container {
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .btn-eliminar {
+      background-color: #dc3545;
+      border: 1px solid #dc3545;
+      color: #fff;
+    }
+
+    .btn-volver-portal {
+      background-color: #ffc107;
+      border: 1px solid #ffc107;
+      color: #fff;
+    }
+
+    .btn-agregar-material {
+      background-color: #28a745;
+      border: 1px solid #28a745;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: 1px solid #007bff;
+      color: #fff;
+    }
+  </style>
+
+  <div class="table-container">
+    {% if total_items > 0 %}
+      <table class="table table-striped">
+        <thead class="thead-dark">
           <tr>
-            <td>{{ item.material.nombre_articulo }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>
-              <a href="{% url 'eliminar_del_carrito' pk=item.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
+            <th scope="col">Artículo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Acciones</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for item in carrito_items %}
+            <tr>
+              <td>{{ item.material.nombre_articulo }}</td>
+              <td>{{ item.cantidad }}</td>
+              <td>
+                <a href="{% url 'eliminar_del_carrito' pk=item.pk %}" class="btn eliminar btn-danger btn-sm">Eliminar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-    <div class="text-center">
       <div class="text-center">
-        {% for item in carrito_items %}
-          {% if item.cantidad > item.material.cantidad %}
-            <p class="text-danger">¡Alerta! La cantidad en el carrito para "{{ item.material.nombre_articulo }}" es mayor que la cantidad total de materiales disponibles.</p>
-            <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
-            <a href="{% url 'borrar_carrito' %}" class="btn btn-warning">Borrar Todo el Carrito</a>
-          {% else %}
-            {% if forloop.last %}
-              <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
-              <a href="{% url 'borrar_carrito' %}" class="btn btn-warning">Borrar Todo el Carrito</a>
-              <a href="{% url 'confirmar_pedido' %}" class="btn btn-success">Confirmar Pedido</a>
-            {% endif %}
-          {% endif %}        
-        {% endfor %}
+        <div class="text-center">
+          {% for item in carrito_items %}
+            {% if item.cantidad > item.material.cantidad %}
+              <p class="text-danger">¡Alerta! La cantidad en el carrito para "{{ item.material.nombre_articulo }}" es mayor que la cantidad total de materiales disponibles.</p>
+              <div class="btn-container">
+                <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
+                <a href="{% url 'borrar_carrito' %}" class="btn btn-eliminar btn-warning">Borrar Todo el Carrito</a>
+              </div>
+            {% else %}
+              {% if forloop.last %}
+                <div class="btn-container">
+                  <a href="{% url 'lista_materiales' %}" class="btn btn-volver-portal btn-primary">Regresar a la Lista de Materiales</a>
+                  <a href="{% url 'borrar_carrito' %}" class="btn btn-eliminar btn-warning">Borrar Todo el Carrito</a>
+                  <a href="{% url 'confirmar_pedido' %}" class="btn btn-agregar-material btn-success">Confirmar Pedido</a>
+                </div>
+              {% endif %}
+            {% endif %}        
+          {% endfor %}
+        </div>
       </div>
-    </div>
-  {% else %}
-    <p>No hay elementos en tu carrito.</p>
-    <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
-  {% endif %}
+    {% else %}
+      <p class="text-center">No hay elementos en tu carrito.</p>
+      <div class="btn-container">
+        <a href="{% url 'lista_materiales' %}" class="btn btn-primary">Regresar a la Lista de Materiales</a>
+      </div>
+    {% endif %}
 
-  {% if error_message %}
-    <div class="alert alert-danger" role="alert">
-      {{ error_message }}
-    </div>
-  {% endif %}
+    {% if error_message %}
+      <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+      </div>
+    {% endif %}
 
-  {% if success_message %}
-    <div class="alert alert-success" role="alert">
-      {{ success_message }}
-    </div>
-  {% endif %}
-  
+    {% if success_message %}
+      <div class="alert alert-success" role="alert">
+        {{ success_message }}
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

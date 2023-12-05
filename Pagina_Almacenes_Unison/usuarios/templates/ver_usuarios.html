@@ -1,18 +1,95 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block content %}
-  <h2>Detalles del Usuario</h2>
-  
-  <p><strong>Username:</strong> {{ usuario.username }}</p>
-  <p><strong>Email:</strong> {{ usuario.email }}</p>
-  <p><strong>Nombres:</strong> {{ usuario.nombres }}</p>
-  <p><strong>Apellidos:</strong> {{ usuario.apellidos }}</p>
-  <p><strong>Rol:</strong> {{ usuario.get_rol_display }}</p>
-  <p><strong>Edificio:</strong> {{ usuario.edificio }}</p>
-  <p><strong>Piso:</strong> {{ usuario.piso }}</p>
-  <p><strong>Solicitudes del Usuario:</strong> <a href="{% url 'Reporte_Usuario' pk=usuario.pk %}">Ver Solicitudes</a></p>
+    <style>
+        /* Estilos personalizados */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-  <a href="{% url 'editar_usuario' pk=usuario.pk %}">Editar Usuario</a>
-  <a href="{% url 'eliminar_usuario' pk=usuario.pk %}">Eliminar Usuario</a>
-  <a href="{% url 'lista_usuario' %}">Volver a la Lista de Usuarios</a>
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-editar {
+            background-color: #28a745;
+            border: 1px solid #28a745;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .btn-eliminar {
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .btn-volver {
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: #fff;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+
+    <div class="container">
+        <h2>Detalles del Usuario</h2>
+        
+        <p><strong>Username:</strong> {{ usuario.username }}</p>
+        <p><strong>Email:</strong> {{ usuario.email }}</p>
+        <p><strong>Nombres:</strong> {{ usuario.nombres }}</p>
+        <p><strong>Apellidos:</strong> {{ usuario.apellidos }}</p>
+        <p><strong>Rol:</strong> {{ usuario.get_rol_display }}</p>
+        <p><strong>Edificio:</strong> {{ usuario.edificio }}</p>
+        <p><strong>Piso:</strong> {{ usuario.piso }}</p>
+        <p><strong>Solicitudes del Usuario:</strong> <a href="{% url 'Reporte_Usuario' pk=usuario.pk %}">Ver Solicitudes</a></p>
+
+        <a href="{% url 'editar_usuario' pk=usuario.pk %}" class="btn btn-editar">Editar Usuario</a>
+        <a href="{% url 'eliminar_usuario' pk=usuario.pk %}" class="btn btn-eliminar">Eliminar Usuario</a>
+        <a href="{% url 'lista_usuario' %}" class="btn btn-volver">Volver a la Lista de Usuarios</a>
+    </div>
 {% endblock %}

@@ -1,14 +1,100 @@
 {% extends "index.html" %}
+{% load static %}
 
 {% block content %}
-  <h2>Confirmar Eliminación de Usuario</h2>
+    <style>
+        /* Estilos personalizados */
+        .container {
+            max-width: 500px;
+            margin: auto;
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-  <p>¿Estás seguro de que deseas eliminar al usuario "{{ usuario.username }}"?</p>
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
 
-  <form method="post" action="{% url 'eliminar_usuario' pk=usuario.pk %}">
-    {% csrf_token %}
-    <input type="submit" value="Confirmar Eliminación">
-  </form>
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
 
-  <a href="{% url 'lista_usuario' %}">Cancelar y Volver a la Lista de Usuarios</a>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #c82333;
+        }
+
+        .cancel-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #ffc107;
+            border: 1px solid #ffc107;
+            color: #333;
+            transition: background-color 0.3s ease-in-out;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .cancel-btn:hover {
+            background-color: #ffca2c;
+        }
+
+        .btns-container {
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+
+    <div class="container">
+        <h2>Confirmar Eliminación de Usuario</h2>
+
+        <p>¿Estás seguro de que deseas eliminar al usuario "{{ usuario.username }}"?</p>
+
+        <form method="post" action="{% url 'eliminar_usuario' pk=usuario.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Confirmar Eliminación">
+        </form>
+
+        <div class="btns-container">
+            <a href="{% url 'lista_usuario' %}" class="cancel-btn">Cancelar y Volver a la Lista de Usuarios</a>
+        </div>
+    </div>
 {% endblock %}

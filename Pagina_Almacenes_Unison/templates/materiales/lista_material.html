@@ -7,7 +7,6 @@
 
 {% block content %}
   <link rel="stylesheet" href="{% static 'lista_materiales.css' %}">
-
   <h2 class="text-center mb-4">Inventario de Materiales</h2>
   <form method="post" action="{% url 'agregar_al_carrito_bulk' %}" enctype="multipart/form-data">
     {% csrf_token %}
@@ -22,7 +21,7 @@
             <th scope="col">Cantidad a agregar a carrito:</th>
             {% if user.is_authenticated and user.rol == 'Admin' %}
               <th scope="col">Administrar</th>
-              <th scope="col">Alarm</th>
+              <th scope="col">Alarma</th>
             {% endif %}
           </tr>
         </thead>
@@ -33,10 +32,8 @@
                 <td>{{ material.nombre_articulo }}</td>
                 <td>{{ material.cantidad }}</td>
                 <td>{{ material.categoria }}</td>
-                <td>
-                  <a href="{% url 'ver_producto' pk=material.pk %}" class="btn btn-primary btn-sm">
-                    Ver Detalles
-                  </a>
+                <td class="actions">
+                  <a href="{% url 'ver_producto' pk=material.pk %}" class="btn btn-primary btn-sm">Ver Detalles</a>
                 </td>
                 <td>
                   {% if material.cantidad > 0 %}
@@ -50,10 +47,10 @@
                   {% endif %}
                 </td>
                 {% if user.is_authenticated and user.rol == 'Admin' %}
-                  <td>
-                    <a href="{% url 'editar_material' pk=material.pk %}">Editar Producto</a>
-                    <a href="{% url 'agregar_material' pk=material.pk %}">Restablecer Producto</a>
-                    <a href="{% url 'eliminar_material' pk=material.pk %}">Eliminar Producto</a>
+                  <td class="actions">
+                    <a href="{% url 'editar_material' pk=material.pk %}" class="editar">Editar Producto</a>
+                    <a href="{% url 'agregar_material' pk=material.pk %}" class="reabastecer">Reabastecer Producto</a>
+                    <a href="{% url 'eliminar_material' pk=material.pk %}" class="eliminar">Eliminar Producto</a>
                   </td>
                   <td>
                     {% if material.cantidad <= material.umbral %}
@@ -80,15 +77,15 @@
 
     <div class="text-center mt-4">
       {% if user.is_authenticated and user.rol == 'Admin' %}
-        <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
+        <a href="{% url 'portal_admin' %}" class="btn btn-volver-portal">Volver al portal</a>
       {% else %}
-        <a href="{% url 'portal_intendencia' %}" class="btn btn-info">Volver al portal</a>
+        <a href="{% url 'portal_intendencia' %}" class="btn btn-volver-portal">Volver al portal</a>
       {% endif %}
-      <a href="{% url 'ver_carrito' %}" class="btn btn-info">Ver Carrito</a>
+      <a href="{% url 'ver_carrito' %}" class="btn btn-ver-carrito">Ver Carrito</a>
       {% if user.is_authenticated and user.rol == 'Admin' %}
-        <a href="{% url 'añadir_material' %}" class="btn btn-success">Agregar Material</a>
+        <a href="{% url 'añadir_material' %}" class="btn btn-agregar-material">Agregar Material</a>
       {% endif %}
-      <button type="submit" class="btn btn-success">Agregar Todos al Carrito</button>
+      <button type="submit" class="btn btn-agregar-todos">Agregar Todos al Carrito</button>
     </div>
     </form>
   </body>

@@ -139,8 +139,7 @@ class ListaGastos(ListView):
     model = Gasto
     template_name = 'materiales/lista_gastos.html'
     context_object_name = 'gastos'
-
-      
+     
 class InformeGastosPorMes(ListView):
     model = Gasto
     template_name = 'materiales/informe_gastos_por_mes.html'

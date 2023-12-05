@@ -1,47 +1,108 @@
-<!-- templates/tu_template.html -->
 {% extends "index.html" %}
 {% load static %}
 
 {% block content %}
-    {% if reportes %}
-    {% if user.is_authenticated and user.rol == 'Intendente' %}
-        {% with reporte=reportes.0 %} {# Tomar el primer reporte para obtener el usuario #}
-            <h2>Lista de reportes de {{ reporte.solicitante.username }}</h2>
-        {% endwith %}
-        {% else %}
-        <h2>Lista de reportes</h2>
-        {% endif %}   
-        {% for reporte in reportes %}
-            <hr>
-            <p><b>Solicitud: </b>{{ reporte }}</p>
-            <p><b>Reporte: </b>{{ reporte.pk }}</p>
-            <p><b>Fecha:</b> {{ reporte.fecha}}</p>
-            
-            <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
-            {% for detalle in reporte.detallereporte_set.all %}
-                <p>
-                    Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
-                    Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
-                </p>
-            {% endfor %}
+    <style>
+        /* Estilos personalizados */
+        .container {
+            margin-top: 50px;
+            position: relative;
+        }
 
-            <!-- Mostrar el total gastado por reporte -->
-            <p>Total Gastado : {{ reporte.total_gastado|floatformat:2 }}</p>
-                   
-            {% if user.is_authenticated and user.rol == 'Admin' %}
-            <!-- Agregar un enlace al detalle del usuario -->
-            <p><b>Solicitante: </b><a href="{% url 'Reporte_Usuario' pk=reporte.solicitante.pk %}">{{ reporte.solicitante.username }}</a></p>
-            {% endif %} 
-            
-            <hr>
-        {% endfor %}
-        
-        {% if user.is_authenticated and user.rol == 'Admin' %}
-        <a href="{% url 'borrar_todos_reportes' %}">Eliminar todos los reportes</a>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            margin-bottom: 5px;
+        }
+
+        .btn-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .btn {
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 8px 20px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: 1px solid #dc3545;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border: 1px solid #ffc107;
+            color: #000;
+        }
+    </style>
+
+    <div class="container mt-5">
+        {% if reportes %}
+            {% if user.is_authenticated and user.rol == 'Intendente' %}
+                {% with reporte=reportes.0 %}
+                    <h2>Lista de reportes de {{ reporte.solicitante.username }}</h2>
+                {% endwith %}
+            {% else %}
+                <h2>Lista de reportes</h2>
+            {% endif %}   
+
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for reporte in reportes %}
+                    <div class="col">
+                        <div class="card border-primary h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Solicitud: {{ reporte }}</h5>
+                                <p class="card-text"><b>Reporte:</b> {{ reporte.pk }}</p>
+                                <p class="card-text"><b>Fecha:</b> {{ reporte.fecha}}</p>
+
+                                {% for detalle in reporte.detallereporte_set.all %}
+                                    <p class="card-text">
+                                        Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
+                                        Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
+                                    </p>
+                                {% endfor %}
+
+                                <p class="card-text"><b>Total Gastado:</b> {{ reporte.total_gastado|floatformat:2 }}</p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="btn-container"> 
+                {% if user.is_authenticated and user.rol == 'Admin'%}
+                    <a href="{% url 'borrar_todos_reportes' %}" class="btn btn-danger">Eliminar todos</a>
+                {% endif %}
+                <a href="{% url 'portal_admin' %}" class="btn btn-warning">Volver al portal</a>
+            </div>
+        {% else %}
+            <div class="alert alert-warning mt-4" role="alert">
+                
+                No hay solicitudes aún.
+            </div>
+            <div class="btn-container"> 
+                <a href="{% url 'portal_admin' %}" class="btn btn-warning">Volver al portal</a>
+            </div>
         {% endif %}
-    {% else %}
-        <p>No hay solicitudes aún.</p>
-    {% endif %}
-    <a href="{% url 'portal_admin' %}" class="btn btn-info">Volver al portal</a>
-    <br>
+
+    </div>
 {% endblock %}
