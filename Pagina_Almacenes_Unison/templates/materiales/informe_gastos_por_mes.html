@@ -101,6 +101,7 @@
             <button type="submit">Filtrar</button>
         </form>
 
+        {% if informes %}
         <table>
             <thead>
                 <tr>
@@ -119,7 +120,7 @@
                         <td>{{ gasto.producto }}</td>
                         <td>{{ gasto.producto.precio_unitario|floatformat:2|intcomma }}</td>
                         <td>{{ gasto.cantidad|floatformat:0|intcomma }}</td>
-                        <td>{{ gasto.gasto|floatformat:2|intcomma}}</td>
+                        <td>${{ gasto.gasto|floatformat:2|intcomma}}</td>
                         <td><span style="text-transform: lowercase;">{{ gasto.fecha }}</span></td>
                         <td>{{ gasto.id }}</td>
                     </tr>
@@ -133,11 +134,15 @@
                     {% else %}
                         <td>Total gastado:</td>
                     {% endif %}
-                    <td>{{ total_gastos|floatformat:2|intcomma }}</td>
+                    <td>${{ total_gastos|floatformat:2|intcomma }}</td>
                     <td colspan="2"></td>
                 </tr>
             </tfoot>
-        </table>
+            {% else %}
+            <div style="text-align: center; margin-top: 20px;">
+                <p>No hay gastos para el mes seleccionado.</p>
+            </div>        
+             {% endif %}
         <a href="{% url 'portal_admin' %}" class="btn">Volver al portal</a>
     </body>
     </html>
