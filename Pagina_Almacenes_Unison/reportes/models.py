@@ -34,9 +34,7 @@ class DetalleReporte(models.Model):
 
     def total_gastado(self):
         return self.cantidad * self.producto.precio_unitario
-    
-    
-
 
     def __str__(self):
         return f"{self.cantidad} artículos pedidos de: {self.producto.nombre_articulo} en el reporte {self.reporte}"
+

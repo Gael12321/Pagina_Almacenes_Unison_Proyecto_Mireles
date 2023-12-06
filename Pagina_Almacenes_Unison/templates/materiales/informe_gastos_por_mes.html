@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe de Gastos por Mes</title>
+{% extends "index.html" %}
+{% load static %}
+{% load humanize %} 
+
+{% block content %}
+    <!DOCTYPE html>
+
+    <html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Informe de Gastos por Mes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+
             background-color: #f4f4f4;
         }
 
@@ -84,42 +91,54 @@
             background-color: #117a8b;
         }
     </style>
-</head>
-<body>
-    <h1>Informe de Gastos por Mes</h1>
+    </head>
+    <body>
+        <h1>Informe de Gastos por Mes</h1>
 
-    <form method="get" action="{% url 'informe_gastos_por_mes' %}">
-        <label for="mes">Seleccionar Mes:</label>
-        <input type="month" id="mes" name="mes" value="{{ request.GET.mes }}">
-        <button type="submit">Filtrar</button>
-    </form>
+        <form method="get" action="{% url 'informe_gastos_por_mes' %}">
+            <label for="mes">Seleccionar Mes:</label>
+            <input type="month" id="mes" name="mes" value="{{ request.GET.mes }}">
+            <button type="submit">Filtrar</button>
+        </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Precio Unitario</th>
-                <th>Cantidad</th>
-                <th>Total Gasto</th>
-                <th>Fecha</th>
-                <th>ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Datos del informe -->
-            {% for gasto in informes %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ gasto.producto }}</td>
-                    <td>{{ gasto.producto.precio_unitario }}</td>
-                    <td>{{ gasto.cantidad }}</td>
-                    <td>{{ gasto.gasto }}</td>
-                    <td>{{ gasto.fecha }}</td>
-                    <td>{{ gasto.id }}</td>
+                    <th>Producto</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Total Gasto</th>
+                    <th>Fecha</th>
+                    <th>ID</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-        
-    </table>
-    <a href="{% url 'portal_admin' %}" class="btn">Volver al portal</a>
-</body>
-</html>
+            </thead>
+            <tbody>
+                <!-- Datos del informe -->
+                {% for gasto in informes %}
+                    <tr>
+                        <td>{{ gasto.producto }}</td>
+                        <td>{{ gasto.producto.precio_unitario|floatformat:2|intcomma }}</td>
+                        <td>{{ gasto.cantidad|floatformat:0|intcomma }}</td>
+                        <td>{{ gasto.gasto|floatformat:2|intcomma}}</td>
+                        <td><span style="text-transform: lowercase;">{{ gasto.fecha }}</span></td>
+                        <td>{{ gasto.id }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    {% if request.GET.mes %}
+                        <td>Total gastado en el mes:</td>
+                    {% else %}
+                        <td>Total gastado:</td>
+                    {% endif %}
+                    <td>{{ total_gastos|floatformat:2|intcomma }}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <a href="{% url 'portal_admin' %}" class="btn">Volver al portal</a>
+    </body>
+    </html>
+{% endblock %}

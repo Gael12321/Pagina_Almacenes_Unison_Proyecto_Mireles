@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 {% load static %}
+{% load humanize %} 
 
 {% block content %}
     <style>
@@ -70,20 +71,24 @@
                         <div class="card border-primary h-100">
                             <div class="card-body">
                                 <h5 class="card-title">Solicitud: {{ reporte }}</h5>
-                                <p class="card-text"><b>Reporte:</b> {{ reporte.pk }}</p>
-                                <p class="card-text"><b>Fecha:</b> {{ reporte.fecha}}</p>
+                                <p class="card-text"><strong>Reporte:</strong> {{ reporte.pk }}</p>
+                                <p class="card-text"><strong>Fecha:</strong> <span style="text-transform: lowercase;">{{ reporte.fecha }}</span></p>
 
-                                {% for detalle in reporte.detallereporte_set.all %}
-                                    <p class="card-text">
-                                        Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
-                                        Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
-                                    </p>
-                                {% endfor %}
-
-                                <p class="card-text"><b>Total Gastado:</b> {{ reporte.total_gastado|floatformat:2 }}</p>
-                               
+                        
+                                <ul class="list-group">
+                                    {% for detalle in reporte.detallereporte_set.all %}
+                                        <li class="list-group-item">
+                                            Producto: {{ detalle.producto.nombre_articulo }} - 
+                                            Cantidad: {{ detalle.cantidad }} - 
+                                            Total Gastado: ${{ detalle.total_gastado|floatformat:2|intcomma }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                        
+                                <p class="card-text"><strong>Total Gastado:</strong> ${{ reporte.total_gastado|floatformat:2|intcomma}}</p>
                             </div>
                         </div>
+                        
                     </div>
                 {% endfor %}
             </div>

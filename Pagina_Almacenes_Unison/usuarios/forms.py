@@ -52,13 +52,32 @@ class FormularioUsuario(forms.ModelForm):
                 'id': 'password2',
             }
         ),
-        help_text=password_validation.password_validators_help_text_html(),
 
     )
+    # is_staff = forms.BooleanField(
+    #     required=False,
+    #     label='¿Es miembro del staff?',
+    #     widget=forms.CheckboxInput(
+    #         attrs={
+    #             'class': 'form-check-input',
+    #         }
+    #     )
+    # )
+
+    # is_superuser = forms.BooleanField(
+    #     required=False,
+    #     label='¿Es superusuario?',
+    #     widget=forms.CheckboxInput(
+    #         attrs={
+    #             'class': 'form-check-input',
+    #         }
+    #     )
+    # )
 
     class Meta:
         model = Usuario
         fields = ['username', 'email', 'nombres', 'apellidos', 'rol', 'edificio', 'piso', 'password1', 'password2']
+        # ... (sin cambios)
         widgets = {
             'rol': forms.Select(
                 attrs={
@@ -122,4 +141,4 @@ class FormularioUsuario(forms.ModelForm):
 
     def get_user(self):
         email = self.cleaned_data.get('email')
-        return Usuario.objects.get(email=email)
+        return Usuario.objects.get(email=email)	

@@ -1,5 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
+{% load humanize %} 
+
 
 {% block content %}
     <style>
@@ -51,34 +53,46 @@
             border: 1px solid #ffc107;
             color: #fff;
         }
+
+        .left-align {
+        display: inline-block;
+        width: 200px; /* Ajusta el valor según tus necesidades */
+        }
+
+        .right-align {
+        display: inline-block;
+        text-align: left;
+        margin-left: 10px; /* Ajusta el valor según tus necesidades */
+    }
+
     </style>
 
-    <div class="container">
-        <h2>Lista de gastos</h2>
-        {% if gastos %}
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                {% for gasto in gastos %}
-                    <div class="col">
-                        <div class="card border-info h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">ID de gasto: {{ gasto.pk }}</h5>
-                                <p class="card-text"><b>Producto:</b> {{ gasto.producto }}</p>
-                                <p class="card-text"><b>Precio unitario:</b> {{ gasto.producto.precio_unitario }}</p>
-                                <p class="card-text"><b>Cantidad:</b> {{ gasto.cantidad }} </p>
-                                <p class="card-text"><b>Gasto:</b> ${{ gasto.gasto }}</p>
-                                <p class="card-text"><b>Fecha del gasto:</b> {{ gasto.fecha }}</p>
-                            </div>
+<div class="container">
+    <h2>Lista de gastos</h2>
+    {% if gastos %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for gasto in gastos %}
+                <div class="col">
+                   <div class="card border-info h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><span class="left-align">ID de gasto:</span> {{ gasto.pk }}</h5>
+                            <p class="card-text"><b><span class="left-align">Producto:</span></b> {{ gasto.producto }}</p>
+                            <p class="card-text"><b><span class="left-align">Precio unitario:</span></b> ${{ gasto.producto.precio_unitario|floatformat:2|intcomma}}</p>
+                            <p class="card-text"><b><span class="left-align">Cantidad:</span></b> {{ gasto.cantidad|floatformat:0 }} </p>
+                            <p class="card-text"><b><span class="left-align">Gasto:</span></b> ${{ gasto.gasto|floatformat:2|intcomma}}</p>
+                            <p class="card-text"><b><span class="left-align">Fecha del gasto:</span></b> <span style="text-transform: lowercase;">{{ gasto.fecha }}</span></p>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>No se han hecho gastos aún.</p>
-        {% endif %}
-        
-        <div class="btn-container">
-            <a href="{% url 'informe_gastos_por_mes' %}" class="btn btn-info">Gastos por mes</a>
-            <a href="{% url 'portal_admin' %}" class="btn btn-warning">Volver al portal</a>
+                </div>
+            {% endfor %}
         </div>
+    {% else %}
+        <p>No se han hecho gastos aún.</p>
+    {% endif %}
+    
+    <div class="btn-container">
+        <a href="{% url 'informe_gastos_por_mes' %}" class="btn btn-info">Gastos por mes</a>
+        <a href="{% url 'portal_admin' %}" class="btn btn-warning">Volver al portal</a>
     </div>
+</div>
 {% endblock %}
