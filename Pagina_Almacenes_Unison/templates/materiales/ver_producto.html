@@ -78,11 +78,16 @@
               <div class="details">
                 <p><strong>Artículo:</strong> {{ material.nombre_articulo }}</p>
                 <p><strong>Cantidad disponible:</strong> {{ material.cantidad }}</p>
-                <p><strong>Precio por unidad:</strong> ${{ material.precio_unitario|floatformat:2 }}</p>
+                <p><strong>Precio por unidad:</strong> ${{ material.precio_unitario }}</p>
+                {% if user.is_authenticated and user.rol == 'Admin'%}
+                <p><strong>Cantidad mínima:</strong> {{ material.umbral|floatformat:0}}</p>
+                {% endif %}
                 <p><strong>Descripción del Producto:</strong> {{ material.descripcion }}</p>
                 <p><strong>Origen del Producto:</strong> {{ material.get_Origen_display }}</p>
-                {% if material.unidades_o_paquetes %}
-                  <p><strong>Unidades del paquete:</strong> {{ material.cantidad_por_paquete }}</p>
+                {% if user.is_authenticated and user.rol == 'Admin'%} 
+                  {% if material.unidades_o_paquetes %}
+                    <p><strong>Unidades del paquete:</strong> {{ material.cantidad_por_paquete }}</p>
+                  {% endif %}
                 {% endif %}
                 <img src="{{ material.imagen.url }}" alt="{{ material.nombre }}" class="img-thumbnail">
               </div>
