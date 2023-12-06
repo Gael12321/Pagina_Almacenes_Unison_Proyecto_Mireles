@@ -1,5 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
+{% load humanize %} 
+
 
 {% block content %}
     <style>
@@ -121,18 +123,18 @@
             {% for reporte in reportes %}
                 <hr>
                 <p><b>Reporte ID: </b>{{ reporte.id }}</p>
-                <p><b>Fecha:</b> {{ reporte.fecha}}</p>
+                <p><b>Fecha:</b> <span style="text-transform: lowercase;">{{ reporte.fecha }}</span></p>
                 
                 <!-- Iterar sobre los DetalleReporte asociados a este Reporte -->
                 {% for detalle in reporte.detallereporte_set.all %}
                     <p>
                         Producto: {{ detalle.producto.nombre_articulo }} - Cantidad: {{ detalle.cantidad }} - 
-                        Total Gastado: {{ detalle.total_gastado|floatformat:2 }}
+                        Total Gastado: ${{ detalle.total_gastado|floatformat:2|intcomma }}
                     </p>
                 {% endfor %}
 
                 <!-- Mostrar el total gastado por reporte -->
-                <p>Total Gastado por Reporte: {{ reporte.total_gastado|floatformat:2 }}</p>
+                <p>Total Gastado por Reporte: ${{ reporte.total_gastado|floatformat:2|intcomma }}</p>
                 
                 <a href="{% url 'eliminar_reporte' pk=reporte.pk %}" class="btn btn-orange">Eliminar solicitud</a>
                 <hr>

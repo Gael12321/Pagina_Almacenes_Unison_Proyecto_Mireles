@@ -118,7 +118,7 @@
                 {% for gasto in informes %}
                     <tr>
                         <td>{{ gasto.producto }}</td>
-                        <td>{{ gasto.producto.precio_unitario|floatformat:2|intcomma }}</td>
+                        <td>${{ gasto.producto.precio_unitario|floatformat:2|intcomma }}</td>
                         <td>{{ gasto.cantidad|floatformat:0|intcomma }}</td>
                         <td>${{ gasto.gasto|floatformat:2|intcomma}}</td>
                         <td><span style="text-transform: lowercase;">{{ gasto.fecha }}</span></td>

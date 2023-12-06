@@ -78,7 +78,7 @@
               <div class="details">
                 <p><strong>Artículo:</strong> {{ material.nombre_articulo }}</p>
                 <p><strong>Cantidad disponible:</strong> {{ material.cantidad }}</p>
-                <p><strong>Precio por unidad:</strong> {{ material.precio_unitario|floatformat:2 }}</p>
+                <p><strong>Precio por unidad:</strong> ${{ material.precio_unitario|floatformat:2 }}</p>
                 <p><strong>Descripción del Producto:</strong> {{ material.descripcion }}</p>
                 <p><strong>Origen del Producto:</strong> {{ material.get_Origen_display }}</p>
                 {% if material.unidades_o_paquetes %}
